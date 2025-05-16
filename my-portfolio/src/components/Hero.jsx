@@ -10,7 +10,7 @@ const Hero = () => {
             <span className="text-lime-400">bygga saker</span>&nbsp;/&gt;
           </p>
           <div className="text-lime-400 font-semibold text-xl">
-            Frontendutvecklare
+            Fullstack Developer
             <div className="text-sm text-gray-300">&lt;JavaScript, React, Tailwind&gt;</div>
           </div>
         </div>

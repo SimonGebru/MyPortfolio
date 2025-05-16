@@ -2,12 +2,14 @@ import { Link } from 'react-router-dom';
 import { projects } from '../data/projects';
 import Hero from '../components/Hero';
 import About from '../components/About';
+import Education from '../components/Education';
 
 const Home = () => {
     return (
       <>
         <Hero />
         <About />
+        <Education />
         <div className="p-6">
           <h1 className="text-4xl font-bold mb-6">Mina projekt</h1>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

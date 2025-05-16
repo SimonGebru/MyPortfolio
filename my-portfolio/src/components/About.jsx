@@ -43,13 +43,20 @@ const techStack = [
   
           {/* TEKNIKER/IKONER */}
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 text-center">
-            {techStack.map((tech) => (
-              <div key={tech.name} className="bg-gray-800 p-4 rounded-lg hover:bg-gray-700 transition">
-                <img src={tech.icon} alt={tech.name} className="h-12 mx-auto mb-2" />
-                <p className="text-lime-400 font-semibold">{tech.name}</p>
-              </div>
-            ))}
-          </div>
+  {techStack.map((tech) => (
+    <div
+      key={tech.name}
+      className="group bg-gray-800 p-4 rounded-lg hover:bg-gray-700 transition transform hover:-translate-y-2 hover:scale-105 duration-300"
+    >
+      <img
+        src={tech.icon}
+        alt={tech.name}
+        className="h-12 mx-auto mb-2 filter grayscale group-hover:grayscale-0 transition duration-300"
+      />
+      <p className="text-lime-400 font-semibold">{tech.name}</p>
+    </div>
+  ))}
+</div>
         </div>
       </section>
     );
