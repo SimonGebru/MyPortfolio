@@ -1,4 +1,19 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Bokens startposition (bakåtlutad) */
+.custom-rotate {
+    transform: rotateY(-60deg);
+    transform-style: preserve-3d;
+  }
+  
+  /* Hover-effekt för att visa framsidan */
+  .group:hover .group-hover\:rotate-y-0 {
+    transform: rotateY(0deg);
+  }
+  
+  /* Extra: när boken "kommer ut" i Z-led vid hover */
+  .group:hover .group-hover\:translate-z-10 {
+    transform: translateZ(20px) rotateY(0deg);
+  }

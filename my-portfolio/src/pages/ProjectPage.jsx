@@ -8,16 +8,36 @@ const ProjectPage = () => {
   if (!project) return <div className="p-6">Projektet hittades inte.</div>;
 
   return (
-    <div className="p-6">
-      <h1 className="text-4xl font-bold mb-4">{project.title}</h1>
-      <img src={project.image} alt={project.title} className="w-full max-w-2xl mb-6 rounded" />
-      <p className="mb-4">{project.details}</p>
-      <h2 className="text-xl font-semibold mb-2">Tekniker:</h2>
-      <ul className="list-disc list-inside">
-        {project.technologies.map((tech) => (
-          <li key={tech}>{tech}</li>
-        ))}
-      </ul>
+    <div className="min-h-screen bg-[#1e1f25] text-white py-16 px-6 md:px-20">
+      <div className="max-w-4xl mx-auto">
+        <h1 className="text-5xl font-bold text-lime-400 mb-6 text-center drop-shadow-md">
+          {project.title}
+        </h1>
+
+        <div className="rounded-xl overflow-hidden shadow-xl border border-lime-500 mb-10">
+          <img
+            src={project.image}
+            alt={project.title}
+            className="w-full object-cover max-h-[400px]"
+          />
+        </div>
+
+        <p className="text-lg text-gray-300 leading-relaxed mb-8">
+          {project.details}
+        </p>
+
+        <h2 className="text-2xl font-semibold text-lime-400 mb-3">Använda tekniker</h2>
+        <ul className="grid grid-cols-2 md:grid-cols-3 gap-4">
+          {project.technologies.map((tech) => (
+            <li
+              key={tech}
+              className="bg-gray-800 text-white py-2 px-4 rounded shadow text-center hover:bg-lime-600 transition"
+            >
+              {tech}
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };

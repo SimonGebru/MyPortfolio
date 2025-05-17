@@ -14,8 +14,8 @@ const Education = () => {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-lime-400 opacity-5 rounded-full blur-3xl pointer-events-none z-0" />
       <div className="absolute inset-0 bg-[url('/noise.png')] opacity-25 mix-blend-overlay z-0 pointer-events-none" />
 
-      {/* 🔽 Soft Shadow Separator from About */}
-      <div className="absolute top-0 left-0 w-full h-10 shadow-[inset_0_10px_10px_-10px_rgba(0,0,0,0.6)] z-10" />
+      {/* 🔽 Stronger Shadow Separator from About */}
+      <div className="absolute top-0 left-0 w-full h-12 shadow-[inset_0_20px_20px_-10px_rgba(0,0,0,0.8)] z-10" />
 
       {/* 🔠 Heading */}
       <div className="relative z-10 max-w-6xl mx-auto text-center mb-12">
@@ -36,6 +36,9 @@ const Education = () => {
           Folkuniversitetet, Göteborg
         </p>
       </div>
+
+      {/* 🔼 Stronger Shadow Separator toward Projects */}
+      <div className="absolute bottom-0 left-0 w-full h-12 shadow-[inset_0_-20px_20px_-10px_rgba(0,0,0,0.8)] z-10" />
 
       {/* 🧾 Modal */}
       <EducationModal isOpen={showModal} onClose={() => setShowModal(false)} />
