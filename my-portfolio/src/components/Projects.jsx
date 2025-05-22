@@ -40,61 +40,61 @@ const Projects = () => {
         ))}
       </div>
 
-      {/* 📚 Horisontell Bokhylla */}
-      {remainingProjects.length > 0 && (
-        <div className="relative z-10 mt-20">
-          <h3 className="text-center text-lime-500 font-bold text-lg mb-10">Fler projekt</h3>
+ {/* 📚 Horisontell Bokhylla */}
+{remainingProjects.length > 0 && (
+  <div className="relative z-10 mt-20">
+    <h3 className="text-center text-lime-500 font-bold text-lg mb-10">Fler projekt</h3>
 
-          <div className="relative overflow-x-auto px-4 pb-20">
-  <div
-    className="flex justify-center gap-6 w-full flex-wrap"
-    style={{ perspective: "1200px" }}
-  >
-              {remainingProjects.map((proj) => (
-                <Link
-                  key={proj.id}
-                  to={`/project/${proj.id}`}
-                  className="relative group w-[120px] h-[180px] flex-shrink-0"
-                >
-                  <div
-                    className="relative w-full h-full transition-transform duration-500 custom-rotate group-hover:rotate-y-0 group-hover:translate-z-10"
-                  >
-                    {/* Bokframsida */}
-                    <div
-                      className="absolute inset-0 rounded-md bg-white/10 border border-lime-500 backdrop-blur-md shadow-md flex flex-col justify-center items-center text-center text-lime-400 font-semibold text-xs px-2"
-                      style={{
-                        transform: "rotateY(0deg)",
-                        backfaceVisibility: "hidden",
-                      }}
-                    >
-                      {proj.title}
-                      <p className="text-[10px] text-gray-300 mt-1 px-1 line-clamp-2">
-                        {proj.description}
-                      </p>
-                    </div>
+    <div className="relative overflow-x-auto px-4 pb-20">
+      <div
+        className="flex min-w-max"
+        style={{ perspective: "1200px" }}
+      >
+        {remainingProjects.map((proj) => (
+          <Link
+            key={proj.id}
+            to={`/project/${proj.id}`}
+            className="relative group w-[200px] h-[180px] flex-shrink-0"
+          >
+            <div
+              className="relative w-full h-full transition-transform duration-500 custom-rotate group-hover:rotate-y-0 group-hover:translate-z-10"
+            >
+              {/* Bokframsida */}
+              <div
+                className="absolute inset-0 rounded-md bg-white/10 border border-lime-500 backdrop-blur-md shadow-md flex flex-col justify-center items-center text-center text-lime-400 font-semibold text-xs px-2"
+                style={{
+                  transform: "rotateY(0deg)",
+                  backfaceVisibility: "hidden",
+                }}
+              >
+                {proj.title}
+                <p className="text-[10px] text-gray-300 mt-1 px-1 line-clamp-2">
+                  {proj.description}
+                </p>
+              </div>
 
-                    {/* Bokrygg / sida */}
-                    <div
-                      className="absolute top-0 right-[-12px] w-[12px] h-full bg-lime-400/30 rounded-r-md"
-                      style={{
-                        transform: "rotateY(90deg)",
-                        transformOrigin: "left center",
-                        backfaceVisibility: "hidden",
-                      }}
-                    ></div>
-                  </div>
-
-                  {/* Skugga undertill */}
-                  <div className="absolute bottom-0 left-0 w-full h-2 bg-black/20 blur-sm rounded-b-md scale-95 z-[-1]" />
-                </Link>
-              ))}
+              {/* Bokrygg / sida */}
+              <div
+                className="absolute top-0 right-[-20px] w-[20px] h-full bg-lime-400/30 rounded-r-md"
+                style={{
+                  transform: "rotateY(90deg)",
+                  transformOrigin: "left center",
+                  backfaceVisibility: "hidden",
+                }}
+              ></div>
             </div>
 
-            {/* Hyllan */}
-            <div className="absolute bottom-4 left-4 right-4 h-[6px] bg-white/20 rounded-full mx-auto max-w-[95%]" />
-          </div>
-        </div>
-      )}
+            {/* Skugga undertill */}
+            <div className="absolute bottom-0 left-0 w-full h-2 bg-black/20 blur-sm rounded-b-md scale-95 z-[-1]" />
+          </Link>
+        ))}
+      </div>
+
+      {/* Hylla */}
+      <div className="absolute bottom-4 left-4 right-4 h-[6px] bg-white/20 rounded-full mx-auto max-w-[95%]" />
+    </div>
+  </div>
+)}
     </section>
   );
 };
