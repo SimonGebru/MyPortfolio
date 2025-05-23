@@ -17,3 +17,16 @@
   .group:hover .group-hover\:translate-z-10 {
     transform: translateZ(20px) rotateY(0deg);
   }
+
+  html,
+body {
+  @apply bg-[#1e1f25] text-white m-0 p-0;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+html {
+  scroll-behavior: smooth;
+}
