@@ -37,16 +37,16 @@ const Contact = () => {
   return (
     <section
       id="contact"
-      className="relative bg-[#1e1f25] text-white py-24 px-6 md:px-20 overflow-hidden"
+      className="relative bg-[#1e1f25] text-white py-14 px-6 md:px-20 overflow-hidden"
     >
       <Toaster position="top-center" />
       <div className="absolute inset-0 bg-gradient-to-br from-lime-300/10 to-transparent pointer-events-none z-0" />
 
       {/* Rubrik */}
       <div className="relative z-10 text-center mb-12">
-        <h2 className="text-4xl font-bold text-lime-500 uppercase">Kontakta mig</h2>
+        <h2 className="text-4xl font-bold text-lime-500 uppercase">Contact me</h2>
         <p className="text-gray-400 mt-2">
-          Vill du prata kod, samarbeten eller bara säga hej?
+        Interested in talking code, collaborations, or just want to say hi?
         </p>
       </div>
 
@@ -55,7 +55,7 @@ const Contact = () => {
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label htmlFor="name" className="block text-sm font-medium text-lime-400">
-              Namn
+              Name
             </label>
             <input
               type="text"
@@ -65,13 +65,13 @@ const Contact = () => {
               onChange={handleChange}
               required
               className="mt-1 w-full p-3 rounded bg-[#2b2c34] text-white border border-lime-400 focus:outline-none"
-              placeholder="Ditt namn"
+              placeholder="Your name"
             />
           </div>
 
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-lime-400">
-              E-post
+              Email
             </label>
             <input
               type="email"
@@ -81,13 +81,13 @@ const Contact = () => {
               onChange={handleChange}
               required
               className="mt-1 w-full p-3 rounded bg-[#2b2c34] text-white border border-lime-400 focus:outline-none"
-              placeholder="din@email.se"
+              placeholder="your@email.se"
             />
           </div>
 
           <div>
             <label htmlFor="message" className="block text-sm font-medium text-lime-400">
-              Meddelande
+              Message
             </label>
             <textarea
               id="message"
@@ -97,7 +97,7 @@ const Contact = () => {
               onChange={handleChange}
               required
               className="mt-1 w-full p-3 rounded bg-[#2b2c34] text-white border border-lime-400 focus:outline-none"
-              placeholder="Skriv ditt meddelande här..."
+              placeholder="Write your message here…"
             />
           </div>
 
@@ -108,14 +108,14 @@ const Contact = () => {
               disabled={loading}
               className="bg-lime-500 text-[#1e1f25] font-semibold py-3 px-6 rounded hover:bg-lime-400 transition disabled:opacity-50"
             >
-              {loading ? "Skickar..." : "Skicka"}
+              {loading ? "Sending..." : "Send"}
             </button>
           </div>
         </form>
 
         {/* Ikoner istället för e-post */}
         <div className="mt-10 text-center">
-          <p className="text-gray-400">Eller kontakta mig via:</p>
+          <p className="text-gray-400">Or reach out to me on:</p>
           <div className="mt-4 flex justify-center gap-6 text-lime-400 text-2xl">
             <a
               href="https://www.linkedin.com/in/simon-gebru-80b21b1b8"

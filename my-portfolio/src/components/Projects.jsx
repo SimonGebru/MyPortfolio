@@ -17,17 +17,33 @@ const Projects = () => {
 
       {/* 🧠 Rubrik */}
       <div className="relative z-10 text-center mb-12">
-        <h2 className="text-4xl font-bold text-lime-500 uppercase">Mina Projekt</h2>
-        <p className="text-gray-400 mt-2">Utforska några av mina favoritbyggen</p>
+        <h2
+          className="text-4xl font-bold text-lime-500 uppercase"
+          data-aos="fade-up"
+          data-aos-duration="600"
+        >
+          Mina Projekt
+        </h2>
+        <p
+          className="text-gray-400 mt-2"
+          data-aos="fade-up"
+          data-aos-delay="100"
+          data-aos-duration="600"
+        >
+          Utforska några av mina favoritbyggen
+        </p>
       </div>
 
       {/* ⭐️ 3 Framhävda Projekt */}
       <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-        {featuredProjects.map((proj) => (
+        {featuredProjects.map((proj, index) => (
           <Link
             key={proj.id}
             to={`/project/${proj.id}`}
             className="group bg-white/5 border border-lime-500 backdrop-blur-md rounded-2xl p-5 shadow-lg hover:scale-105 hover:shadow-xl transition-all duration-300 flex flex-col"
+            data-aos="fade-up"
+            data-aos-delay={index * 150}
+            data-aos-duration="700"
           >
             <img
               src={proj.image}
@@ -43,15 +59,23 @@ const Projects = () => {
       {/* 📚 Horisontell Bokhylla */}
       {remainingProjects.length > 0 && (
         <div className="relative z-10 mt-20">
-          <h3 className="text-center text-lime-500 font-bold text-lg mb-10">Fler projekt</h3>
+          <h3
+            className="text-center text-lime-500 font-bold text-lg mb-10"
+            data-aos="fade-up"
+          >
+            Fler projekt
+          </h3>
 
           <div className="relative overflow-x-auto px-4 pb-20">
             <div className="flex min-w-max" style={{ perspective: "1200px" }}>
-              {remainingProjects.map((proj) => (
+              {remainingProjects.map((proj, index) => (
                 <Link
                   key={proj.id}
                   to={`/project/${proj.id}`}
                   className="relative group w-[200px] h-[180px] flex-shrink-0"
+                  data-aos="flip-left"
+                  data-aos-delay={index * 100}
+                  data-aos-duration="700"
                 >
                   <div className="relative w-full h-full transition-transform duration-500 custom-rotate group-hover:rotate-y-0 group-hover:translate-z-10">
                     {/* Bokframsida */}

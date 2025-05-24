@@ -1,7 +1,6 @@
 import { useState } from "react";
 import SkillsModal from "./SkillsModal";
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+
 
 const techStack = [
   // 🧑‍💻 Frontend
@@ -33,51 +32,45 @@ const techStack = [
 
 const About = () => {
   const [open, setOpen] = useState(false);
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true });
+
+
 
   return (
     <section id="about" className="bg-gray-900 text-white py-16 px-6 md:px-20">
       <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
 
-        {/* TEXTSIDA med scroll-aktiverad animation */}
-        <motion.div
-          ref={ref}
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-        >
-          <motion.h2
-            className="text-4xl font-bold mb-6"
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.1, duration: 0.6 }}
-          >
-            Om mig
-          </motion.h2>
+{/* TEXT SECTION with AOS scroll animation */}
+<div>
+  <h2
+    className="text-4xl font-bold mb-6 font-orbitron"
+    data-aos="fade-up"
+    data-aos-duration="600"
+  >
+    About Me
+  </h2>
 
-          <motion.p
-            className="text-gray-300 text-lg leading-relaxed"
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.3, duration: 0.8 }}
-          >
-            Jag brinner för att skapa tydliga, kreativa och funktionella webbsidor.
-            Jag tycker det är roligt att lösa problem med kod och är alltid nyfiken
-            på att lära mig nya verktyg och tekniker. <br /><br />
-            När jag inte kodar gillar jag att lyssna på musik, träna och nörda ner mig i teknik.
-          </motion.p>
+  <p
+    className="text-gray-300 text-lg leading-relaxed font-orbitron"
+    data-aos="fade-up"
+    data-aos-delay="100"
+    data-aos-duration="800"
+  >
+    I’m a curious and creative web developer with a strong interest in building functional, user-friendly, and visually engaging digital experiences. I enjoy solving problems with code and take pride in writing clean, maintainable solutions. I’m constantly learning and exploring new tools, frameworks, and best practices to stay current and improve as a developer.
+<br /><br />Outside of work, I stay active, follow football, and enjoy diving into new developments in tech.
 
-          <motion.button
-            onClick={() => setOpen(true)}
-            className="mt-6 inline-block bg-lime-500 text-[#1e1f25] px-5 py-2 rounded font-semibold hover:bg-lime-400 transition"
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.6, duration: 0.5 }}
-          >
-            Visa mina färdigheter
-          </motion.button>
-        </motion.div>
+<br /><br /><br />Further down the page, you’ll find personal projects I’ve built in my spare time.
+  </p>
+
+  <button
+    onClick={() => setOpen(true)}
+    className="mt-6 inline-block bg-lime-500 text-[#1e1f25] px-5 py-2 rounded font-semibold hover:bg-lime-400 transition"
+    data-aos="fade-up"
+    data-aos-delay="300"
+    data-aos-duration="500"
+  >
+    View My Skills
+  </button>
+</div>
 
         {/* TEKNIKER/IKONER */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 text-center">

@@ -10,7 +10,7 @@ const Footer = () => {
         href="#top"
         className="text-sm text-lime-400 hover:underline block mb-4 flex justify-center items-center gap-1 group"
       >
-        Till toppen
+        Top
         <FontAwesomeIcon
           icon={faArrowUp}
           className="transition-transform duration-300 group-hover:-translate-y-1"
@@ -19,7 +19,7 @@ const Footer = () => {
 
       {/* 📌 Huvudinnehåll i footern */}
       <div className="flex justify-between items-center flex-wrap gap-4 text-sm">
-        <p>© {new Date().getFullYear()} Simon Gebru. Alla rättigheter förbehållna.</p>
+        <p>© {new Date().getFullYear()} Simon Gebru.</p>
         <div className="flex gap-6 text-2xl">
           <a
             href="https://www.linkedin.com/in/simon-gebru-80b21b1b8"

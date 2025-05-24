@@ -30,3 +30,13 @@ html, body, #root {
 html {
   scroll-behavior: smooth;
 }
+
+@layer base {
+  body {
+    @apply font-sans;
+  }
+
+  .font-orbitron {
+    font-family: 'Orbitron', sans-serif;
+  }
+}

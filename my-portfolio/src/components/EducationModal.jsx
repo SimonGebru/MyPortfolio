@@ -1,19 +1,19 @@
 import React from 'react';
 
 const courses = [
-  { name: "HTML & CSS", weeks: "36-41", points: "30 yhp" },
-  { name: "JavaScript", weeks: "21-49", points: "40 yhp" },
-  { name: "TypeScript", weeks: "50-1", points: "15 yhp" },
-  { name: "Agila metoder", weeks: "2-4", points: "15 yhp" },
-  { name: "Frontend-ramverk", weeks: "5-11", points: "35 yhp" },
-  { name: "Backend grunder", weeks: "12-18", points: "35 yhp" },
-  { name: "Databaser", weeks: "19-23", points: "25 yhp" },
-  { name: "Backend fördjupning", weeks: "35-40", points: "30 yhp" },
-  { name: "CD/CI & Deployment", weeks: "41-50", points: "50 yhp" },
-  { name: "Examensarbete del 1", weeks: "50-1", points: "10 av 25 yhp" },
-  { name: "LIA 1", weeks: "2-11", points: "50 yhp" },
-  { name: "Examensarbete del 2", weeks: "12-14", points: "15 av 25 yhp" },
-  { name: "LIA 2", weeks: "14-23", points: "50 yhp" },
+  { name: "HTML & CSS", weeks: "36–41", points: "30 yhp" },
+  { name: "JavaScript", weeks: "21–49", points: "40 yhp" },
+  { name: "TypeScript", weeks: "50–1", points: "15 yhp" },
+  { name: "Agile Methodologies", weeks: "2–4", points: "15 yhp" },
+  { name: "Frontend Frameworks", weeks: "5–11", points: "35 yhp" },
+  { name: "Backend Fundamentals", weeks: "12–18", points: "35 yhp" },
+  { name: "Databases", weeks: "19–23", points: "25 yhp" },
+  { name: "Backend Specialization", weeks: "35–40", points: "30 yhp" },
+  { name: "CD/CI & Deployment", weeks: "41–50", points: "50 yhp" },
+  { name: "Thesis Project Part 1", weeks: "50–1", points: "10 of 25 yhp" },
+  { name: "Internship 1 (LIA 1)", weeks: "2–11", points: "50 yhp" },
+  { name: "Thesis Project Part 2", weeks: "12–14", points: "15 of 25 yhp" },
+  { name: "Internship 2 (LIA 2)", weeks: "14–23", points: "50 yhp" },
 ];
 
 const EducationModal = ({ isOpen, onClose }) => {
