@@ -1,5 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { projects } from '../data/projects';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
 const ProjectPage = () => {
   const { id } = useParams();
@@ -7,9 +9,24 @@ const ProjectPage = () => {
 
   if (!project) return <div className="p-6">Projektet hittades inte.</div>;
 
+  const handleBack = () => {
+    window.location.href = '/#projects';
+  };
+
   return (
     <div className="min-h-screen bg-[#1e1f25] text-white py-16 px-6 md:px-20">
       <div className="max-w-4xl mx-auto">
+
+        {/* 🔙 Back to Projects */}
+        <button
+          onClick={handleBack}
+          className="mb-8 flex items-center gap-2 text-lime-400 hover:text-white transition duration-300"
+          data-aos="fade-in"
+          data-aos-duration="500"
+        >
+          <FontAwesomeIcon icon={faArrowLeft} /> Back to Projects
+        </button>
+
         <h1 className="text-5xl font-bold text-lime-400 mb-6 text-center drop-shadow-md">
           {project.title}
         </h1>
