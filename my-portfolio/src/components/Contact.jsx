@@ -37,24 +37,24 @@ const Contact = () => {
   return (
     <section
       id="contact"
-      className="relative bg-[#1e1f25] text-white py-14 px-6 md:px-20 overflow-hidden"
+      className="relative bg-[#f8fafc] text-gray-800 py-20 px-6 md:px-20 overflow-hidden"
     >
       <Toaster position="top-center" />
-      <div className="absolute inset-0 bg-gradient-to-br from-lime-300/10 to-transparent pointer-events-none z-0" />
+      <div className="absolute inset-0 bg-gradient-to-br from-sky-100/40 to-transparent pointer-events-none z-0" />
 
       {/* Rubrik */}
       <div className="relative z-10 text-center mb-12">
-        <h2 className="text-4xl font-bold text-lime-500 uppercase">Contact me</h2>
-        <p className="text-gray-400 mt-2">
-        Interested in talking code, collaborations, or just want to say hi?
+        <h2 className="text-4xl font-bold text-sky-500 uppercase">Contact me</h2>
+        <p className="text-gray-600 mt-2">
+          Interested in talking code, collaborations, or just want to say hi?
         </p>
       </div>
 
       {/* Formulär */}
-      <div className="relative z-10 max-w-2xl mx-auto bg-white/5 border border-lime-500 p-8 rounded-xl backdrop-blur-md shadow-md">
+      <div className="relative z-10 max-w-2xl mx-auto bg-white border border-sky-200 p-8 rounded-xl shadow-md">
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label htmlFor="name" className="block text-sm font-medium text-lime-400">
+            <label htmlFor="name" className="block text-sm font-medium text-sky-500">
               Name
             </label>
             <input
@@ -64,13 +64,13 @@ const Contact = () => {
               value={form.name}
               onChange={handleChange}
               required
-              className="mt-1 w-full p-3 rounded bg-[#2b2c34] text-white border border-lime-400 focus:outline-none"
+              className="mt-1 w-full p-3 rounded border border-sky-300 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-sky-400"
               placeholder="Your name"
             />
           </div>
 
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-lime-400">
+            <label htmlFor="email" className="block text-sm font-medium text-sky-500">
               Email
             </label>
             <input
@@ -80,13 +80,13 @@ const Contact = () => {
               value={form.email}
               onChange={handleChange}
               required
-              className="mt-1 w-full p-3 rounded bg-[#2b2c34] text-white border border-lime-400 focus:outline-none"
+              className="mt-1 w-full p-3 rounded border border-sky-300 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-sky-400"
               placeholder="your@email.se"
             />
           </div>
 
           <div>
-            <label htmlFor="message" className="block text-sm font-medium text-lime-400">
+            <label htmlFor="message" className="block text-sm font-medium text-sky-500">
               Message
             </label>
             <textarea
@@ -96,7 +96,7 @@ const Contact = () => {
               value={form.message}
               onChange={handleChange}
               required
-              className="mt-1 w-full p-3 rounded bg-[#2b2c34] text-white border border-lime-400 focus:outline-none"
+              className="mt-1 w-full p-3 rounded border border-sky-300 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-sky-400"
               placeholder="Write your message here…"
             />
           </div>
@@ -106,22 +106,22 @@ const Contact = () => {
             <button
               type="submit"
               disabled={loading}
-              className="bg-lime-500 text-[#1e1f25] font-semibold py-3 px-6 rounded hover:bg-lime-400 transition disabled:opacity-50"
+              className="bg-sky-500 text-white font-semibold py-3 px-6 rounded hover:bg-sky-400 transition disabled:opacity-50"
             >
               {loading ? "Sending..." : "Send"}
             </button>
           </div>
         </form>
 
-        {/* Ikoner istället för e-post */}
+        {/* Ikoner */}
         <div className="mt-10 text-center">
-          <p className="text-gray-400">Or reach out to me on:</p>
-          <div className="mt-4 flex justify-center gap-6 text-lime-400 text-2xl">
+          <p className="text-gray-600">Or reach out to me on:</p>
+          <div className="mt-4 flex justify-center gap-6 text-sky-500 text-2xl">
             <a
               href="https://www.linkedin.com/in/simon-gebru-80b21b1b8"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-white transition"
+              className="hover:text-sky-600 transition"
             >
               <FaLinkedin />
             </a>
@@ -129,7 +129,7 @@ const Contact = () => {
               href="https://github.com/SimonGebru"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-white transition"
+              className="hover:text-sky-600 transition"
             >
               <FaGithub />
             </a>

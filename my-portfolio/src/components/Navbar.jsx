@@ -12,7 +12,7 @@ const Navbar = () => {
             wrapper="span"
             repeat={0}
             cursor={true}
-            className="text-lime-400 text-xl"
+            className="text-sky-600 text-xl"
           />
         </Link>
       </div>
