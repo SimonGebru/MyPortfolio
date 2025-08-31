@@ -18,7 +18,7 @@ const Hero = () => {
         </h1>
         <p className="text-lg md:text-xl">
           &lt;I'm a 29-year-old developer who loves&nbsp;
-          <span className="text-sky-500">building things for fun</span> /&gt;
+          <span className="text-sky-500">coding ideas into reality</span> /&gt;
         </p>
         <div className="text-sky-600 font-orbitron font-semibold text-xl">
           Aspiring Fullstack Developer
