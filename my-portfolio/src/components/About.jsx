@@ -20,7 +20,9 @@ const techStack = [
   // 💃️ Databaser
   { name: "MongoDB", icon: "/icons/mongodb.svg" },
   { name: "PostgreSQL", icon: "/icons/postgresql.svg" },
+  { name: "AWS", icon: "/icons/aws.svg" },
   { name: "Firestore", icon: "/icons/firestore.svg" },
+  { name: "Vercel", icon: "/icons/vercel.svg" },
 
   // 🔧 Verktyg
   { name: "Git", icon: "/icons/git.svg" },
