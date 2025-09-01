@@ -3,11 +3,19 @@ import { projects } from '../data/projects';
 import { extraProjects } from '../data/extraProjects';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { useEffect } from 'react';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 const ProjectPage = () => {
   const { id } = useParams();
-  const allProjects = [...projects, ...extraProjects]; // 🟩 inkluderar alla projekt
+  const allProjects = [...projects, ...extraProjects];
   const project = allProjects.find((p) => p.id === id);
+
+  
+  useEffect(() => {
+    AOS.refresh();
+  }, []);
 
   if (!project) return <div className="p-6 text-white">Projektet hittades inte.</div>;
 
@@ -62,28 +70,28 @@ const ProjectPage = () => {
         </p>
 
         {/* 🛠 Technologies */}
-<h2
-  className="text-2xl font-semibold text-lime-400 mb-3"
-  data-aos="fade-up"
-  data-aos-delay="200"
->
-  Used Technologies
-</h2>
+        <h2
+          className="text-2xl font-semibold text-lime-400 mb-3"
+          data-aos="fade-up"
+          data-aos-delay="200"
+        >
+          Used Technologies
+        </h2>
 
-<div className="max-h-60 overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-lime-500 scrollbar-track-gray-700">
-  <ul className="grid grid-cols-2 md:grid-cols-3 gap-4">
-    {project.technologies.map((tech) => (
-      <li
-        key={tech}
-        className="bg-gray-800 text-white py-2 px-4 rounded shadow text-center hover:bg-lime-600 transition"
-        data-aos="fade-up"
-        data-aos-delay="300"
-      >
-        {tech}
-      </li>
-    ))}
-  </ul>
-</div>
+        <div className="max-h-60 overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-lime-500 scrollbar-track-gray-700">
+          <ul className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            {project.technologies.map((tech, index) => (
+              <li
+                key={tech}
+                data-aos="fade-up"
+                data-aos-delay={300 + index * 100} // ⏱ stagger-effekt!
+                className="bg-gray-800 text-white py-2 px-4 rounded shadow text-center hover:bg-lime-600 transition"
+              >
+                {tech}
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </div>
   );
