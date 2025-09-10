@@ -3,6 +3,7 @@ import { projects } from '../data/projects';
 import { extraProjects } from '../data/extraProjects';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { faGithub, faChrome } from '@fortawesome/free-brands-svg-icons';
 import { useEffect } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
@@ -12,7 +13,6 @@ const ProjectPage = () => {
   const allProjects = [...projects, ...extraProjects];
   const project = allProjects.find((p) => p.id === id);
 
-  
   useEffect(() => {
     AOS.refresh();
   }, []);
@@ -69,11 +69,52 @@ const ProjectPage = () => {
           {project.details}
         </p>
 
+        {/* 🔗 Links with Tooltips */}
+        <div className="mt-4 mb-10 flex flex-col sm:flex-row gap-4 justify-center items-center">
+          {project.liveLink && (
+            <a
+              href={project.liveLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              title="Se liveprojektet"
+              className="group relative flex items-center gap-2 bg-lime-500 text-black font-semibold py-2 px-6 rounded-lg shadow-md hover:bg-lime-400 transition"
+              data-aos="fade-up"
+              data-aos-delay="400"
+            >
+              <FontAwesomeIcon icon={faChrome} />
+              Live Preview
+              {/* Tooltip */}
+              <span className="absolute -top-10 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 bg-black text-white text-sm rounded px-3 py-1 transition duration-300 pointer-events-none z-10">
+                Se liveprojektet
+              </span>
+            </a>
+          )}
+
+          {project.github && (
+            <a
+              href={project.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              title="Gå till GitHub-repo"
+              className="group relative flex items-center gap-2 bg-white text-black font-semibold py-2 px-6 rounded-lg shadow-md hover:bg-gray-300 transition"
+              data-aos="fade-up"
+              data-aos-delay="500"
+            >
+              <FontAwesomeIcon icon={faGithub} />
+              GitHub Repo
+              {/* Tooltip */}
+              <span className="absolute -top-10 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 bg-black text-white text-sm rounded px-3 py-1 transition duration-300 pointer-events-none z-10">
+                Gå till GitHub-repo
+              </span>
+            </a>
+          )}
+        </div>
+
         {/* 🛠 Technologies */}
         <h2
           className="text-2xl font-semibold text-lime-400 mb-3"
           data-aos="fade-up"
-          data-aos-delay="200"
+          data-aos-delay="600"
         >
           Used Technologies
         </h2>
@@ -84,7 +125,7 @@ const ProjectPage = () => {
               <li
                 key={tech}
                 data-aos="fade-up"
-                data-aos-delay={300 + index * 100} // ⏱ stagger-effekt!
+                data-aos-delay={700 + index * 100} 
                 className="bg-gray-800 text-white py-2 px-4 rounded shadow text-center hover:bg-lime-600 transition"
               >
                 {tech}
