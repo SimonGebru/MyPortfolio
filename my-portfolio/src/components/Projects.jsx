@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import { projects } from "../data/projects";
 import { extraProjects } from "../data/extraProjects";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChrome, faGithub } from "@fortawesome/free-brands-svg-icons";
 
 const Projects = () => {
   const featuredProjects = projects.slice(0, 3);
@@ -40,11 +42,39 @@ const Projects = () => {
           <Link
             key={proj.id}
             to={`/project/${proj.id}`}
-            className="group bg-white border border-sky-300 rounded-2xl p-5 shadow-md hover:scale-105 hover:shadow-lg transition-all duration-300 flex flex-col"
+            className="group bg-white border border-sky-300 rounded-2xl p-5 shadow-md hover:scale-105 hover:shadow-lg transition-all duration-300 flex flex-col relative"
             data-aos="fade-up"
             data-aos-delay={index * 150}
             data-aos-duration="700"
           >
+            {/* 🔗 Ikoner uppe till höger */}
+            <div className="absolute top-4 right-4 flex gap-3 z-10">
+              {proj.liveLink && (
+                <a
+                  href={proj.liveLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title="Se liveprojektet"
+                  onClick={(e) => e.stopPropagation()}
+                  className="text-sky-500 bg-white p-2 rounded-full shadow hover:text-sky-700 transition text-xl"
+                >
+                  <FontAwesomeIcon icon={faChrome} />
+                </a>
+              )}
+              {proj.github && (
+                <a
+                  href={proj.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title="Visa källkod på GitHub"
+                  onClick={(e) => e.stopPropagation()}
+                  className="text-gray-800 bg-white p-2 rounded-full shadow hover:text-black transition text-xl"
+                >
+                  <FontAwesomeIcon icon={faGithub} />
+                </a>
+              )}
+            </div>
+
             <img
               src={proj.image}
               alt={proj.title}
@@ -86,6 +116,34 @@ const Projects = () => {
                         backfaceVisibility: "hidden",
                       }}
                     >
+                      {/* 🔗 Ikoner uppe till höger */}
+                      <div className="absolute top-2 right-2 flex gap-2">
+                        {proj.liveLink && (
+                          <a
+                            href={proj.liveLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            title="Se liveprojektet"
+                            onClick={(e) => e.stopPropagation()}
+                            className="text-sky-500 hover:text-sky-700 transition text-sm"
+                          >
+                            <FontAwesomeIcon icon={faChrome} />
+                          </a>
+                        )}
+                        {proj.github && (
+                          <a
+                            href={proj.github}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            title="Visa källkod på GitHub"
+                            onClick={(e) => e.stopPropagation()}
+                            className="text-gray-700 hover:text-black transition text-sm"
+                          >
+                            <FontAwesomeIcon icon={faGithub} />
+                          </a>
+                        )}
+                      </div>
+
                       {proj.image && (
                         <img
                           src={proj.image}
