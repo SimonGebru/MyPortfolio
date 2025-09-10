@@ -27,6 +27,7 @@ export const projects = [
     description: 'An interactive VS Code extension for shortcut mastery and code snippet training',
     details:
       'DevPilot is an ongoing VS Code extension project designed to help developers improve their workflow through shortcut training and keyboard kata sessions. Users are presented with random keyboard challenges (e.g. "Comment this line", "Copy a row") and can track their progress over time. The extension also includes a dedicated typing interface where users must reproduce real-world code snippets (from JavaScript, React, Git and more) with precision. A built-in “auto-train” mode delivers new challenges every 10 minutes to promote spaced repetition. \n\nThe project is still in development — we are currently implementing time tracking, feedback on failed attempts, and a future level-up system. The goal is to turn DevPilot into a smart, gamified productivity trainer directly inside the code editor.',
+      github: 'https://github.com/SimonGebru/dev-pilot.git', 
       technologies: [
         'VS Code Extension API',
         'TypeScript',
@@ -49,7 +50,9 @@ title: 'JobTracker',
 description: 'Track your job applications with a smart dashboard',
 details:
   'JobTracker is a full-stack job application manager where users can register, log in, and track their job applications using a responsive Kanban-style dashboard. Users can filter applications by status, mark favorites, set deadlines, and receive reminders for upcoming deadlines. The app also features a profile page with support for email and password updates, password recovery via email, and real-time statistics. The project is built as a Progressive Web App (PWA) for installability on mobile and desktop devices.',
-technologies: [
+  liveLink:'',
+  github: 'https://github.com/SimonGebru/jobbsearch.git',
+  technologies: [
   'React',
   'TypeScript',
   'Tailwind CSS',
