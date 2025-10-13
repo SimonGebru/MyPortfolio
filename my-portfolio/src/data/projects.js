@@ -50,7 +50,7 @@ export const projects = [
     description: 'Originally built as a local MERN-style app using hardcoded localhost API calls, the project had to be refactored to support deployment in production. Environment variables were introduced, API calls were rewritten to use dynamic base URLs, and the backend was configured for cloud hosting. This allowed the app to successfully run live with a frontend on Firebase Hosting and a backend on Render connected to MongoDB Atlas.',
     details:
       'JobTracker is a full-stack job application manager where users can register, log in, and track their job applications using a responsive Kanban-style dashboard. Users can filter applications by status, mark favorites, set deadlines, and receive reminders for upcoming deadlines. The app also features a profile page with support for email and password updates, password recovery via email, and real-time statistics. The project is built as a Progressive Web App (PWA) for installability on mobile and desktop devices.',
-    liveLink:'https://jobsearch-s1337.web.app',
+    liveLink:'https://jobsearch-s1337.web.app/',
     github: 'https://github.com/SimonGebru/jobbsearch.git',
     technologies: [
       'React',

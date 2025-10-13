@@ -30,6 +30,30 @@ export const extraProjects = [
     image: directorscutImage,
   },
   {
+    id: 'fpl-edge',
+    title: 'FPL Edge',
+    description:
+      'A lightweight Fantasy Premier League (FPL) assistant app that fetches official FPL data through a Node/Express proxy, calculates smart heuristics like FormScore, Fixture Difficulty, and Minutes Risk, and visualizes captain picks, watchlists, fixture heatmaps, and league insights with real-time comparisons.',
+    details:
+      'FPL Edge consists of a backend proxy for the official FPL API and a React-based frontend dashboard for data visualization and decision support. The backend fetches bootstrap, fixtures, and live data to calculate metrics such as FormScore, Fixture Difficulty Rating (FDR), and rotation risks. The frontend uses React Context (UserTeamContext and LayoutContext) to import the user’s team, persist data locally, and display key modules such as Captain Picks, Fixture Heatmap, Watchlist, and League standings. The League view allows users to “peek” at other managers’ teams in a modal, including player availability indicators (injured, suspended, doubtful). A dedicated Top-5 Insights panel analyzes leader picks — identifying the common template, captain trends, gaps versus your team, and your unique differentials. The backend includes intelligent fallbacks for FPL’s visibility rules, cycling through current → next → last finished → last played Gameweek via /history/. Continuous Integration via GitHub Actions keeps metrics and cached data updated automatically.',
+    liveLink: null, // add public URL when deployed
+    github: null,   // add repo link (monorepo / api / web) when ready
+    technologies: [
+      'React',
+      'Vite',
+      'Tailwind CSS',
+      'React Context API',
+      'Node.js',
+      'Express.js',
+      'node-fetch',
+      'GitHub Actions (scheduled updates)',
+      'JSON-based storage (MVP)',
+      'Proxy / CORS handling',
+      'LocalStorage persistence',
+    ],
+    image: null, // reference to your screenshot or hero image
+  }, 
+  {
     id: 'secondscope',
     title: 'SecondScope',
     description: 'A prototype for a secondhand fashion search engine',
@@ -89,13 +113,5 @@ export const extraProjects = [
       'Web Notifications',
     ],
     image: focusmodeImage,
-  },
-    {
-      id: "financehub",
-      title: "Coming Soon",
-      description: "---",
-      details: "---",
-      technologies: [],
-      image: ""
-    }
+  }
   ];
