@@ -1,104 +1,141 @@
 import { useState } from "react";
-import SkillsModal from "./SkillsModal";
-
+import { motion, AnimatePresence } from "framer-motion";
 
 const techStack = [
-  // 🧑‍💻 Frontend
-  { name: "HTML", icon: "/icons/html.svg" },
-  { name: "CSS", icon: "/icons/css.svg" },
-  { name: "JavaScript", icon: "/icons/js.svg" },
-  { name: "TypeScript", icon: "/icons/ts.svg" },
-  { name: "React", icon: "/icons/react.svg" },
-  { name: "Redux", icon: "/icons/redux.svg" },
-  { name: "Tailwind", icon: "/icons/tailwind.svg" },
-  { name: "SASS", icon: "/icons/sass.svg" },
+  { name: "HTML", icon: "/icons/html.svg", category: "frontend" },
+  { name: "CSS", icon: "/icons/css.svg", category: "frontend" },
+  { name: "JavaScript", icon: "/icons/js.svg", category: "frontend" },
+  { name: "TypeScript", icon: "/icons/ts.svg", category: "frontend" },
+  { name: "React", icon: "/icons/react.svg", category: "frontend" },
+  { name: "Redux", icon: "/icons/redux.svg", category: "frontend" },
+  { name: "Tailwind", icon: "/icons/tailwind.svg", category: "frontend" },
+  { name: "SASS", icon: "/icons/sass.svg", category: "frontend" },
 
-  // 🚀 Backend
-  { name: "Node.js", icon: "/icons/node.svg" },
-  { name: "Express", icon: "/icons/express.svg" },
+  { name: "Node.js", icon: "/icons/node.svg", category: "backend" },
+  { name: "Express", icon: "/icons/express.svg", category: "backend" },
 
-  // 💃️ Databaser
-  { name: "MongoDB", icon: "/icons/mongodb.svg" },
-  { name: "PostgreSQL", icon: "/icons/postgresql.svg" },
-  { name: "AWS", icon: "/icons/aws.svg" },
-  { name: "Firestore", icon: "/icons/firestore.svg" },
-  { name: "Vercel", icon: "/icons/vercel.svg" },
+  // (du har DB här som "backend" – helt ok)
+  { name: "MongoDB", icon: "/icons/mongodb.svg", category: "backend" },
+  { name: "PostgreSQL", icon: "/icons/postgresql.svg", category: "backend" },
 
-  // 🔧 Verktyg
-  { name: "Git", icon: "/icons/git.svg" },
-  { name: "GitHub", icon: "/icons/github.svg" },
-  { name: "Postman", icon: "/icons/postman.svg" },
-  { name: "Figma", icon: "/icons/figma.svg" },
-  { name: "Trello", icon: "/icons/trello.svg" },
+  { name: "AWS", icon: "/icons/aws.svg", category: "tools" },
+  { name: "Firestore", icon: "/icons/firestore.svg", category: "tools" },
+  { name: "Vercel", icon: "/icons/vercel.svg", category: "tools" },
+
+  { name: "Git", icon: "/icons/git.svg", category: "tools" },
+  { name: "GitHub", icon: "/icons/github.svg", category: "tools" },
+  { name: "Postman", icon: "/icons/postman.svg", category: "tools" },
+  { name: "Figma", icon: "/icons/figma.svg", category: "tools" },
+  { name: "Trello", icon: "/icons/trello.svg", category: "tools" },
 ];
 
+const categories = ["all", "frontend", "backend", "tools"];
+
 const About = () => {
-  const [open, setOpen] = useState(false);
+  const [filter, setFilter] = useState("all");
+
+  const filtered =
+    filter === "all"
+      ? techStack
+      : techStack.filter((tech) => tech.category === filter);
 
   return (
-    <section
-  id="about"
-  className="bg-gradient-to-b from-[#f7f9fc] to-[#e9eff5] text-gray-800 py-16 px-6 md:px-20"
->
-      <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+    <section id="about" className="relative py-28 px-6 md:px-20 text-slate-200 overflow-hidden">
+      {/* Background overlay (lets ParticleField show through) */}
+      <div className="absolute inset-0 z-0 bg-gradient-to-b from-[#020617]/85 via-[#020617]/65 to-transparent pointer-events-none" />
+      <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_70%_30%,rgba(56,189,248,0.10),transparent_55%)] pointer-events-none" />
 
-        {/* TEXT SECTION */}
-        <div>
-          <h2
-            className="text-4xl font-bold mb-6 font-orbitron text-sky-600"
-            data-aos="fade-up"
-            data-aos-duration="600"
-          >
-            About Me
+      <div className="relative z-10 max-w-7xl mx-auto grid lg:grid-cols-5 gap-16">
+        {/* LEFT SIDE – TEXT */}
+        <motion.div
+          className="lg:col-span-2"
+          initial={{ opacity: 0, y: 14 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.4 }}
+        >
+          <span className="text-xs uppercase tracking-widest text-sky-400 mb-4 inline-block">
+            About
+          </span>
+
+          <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-6">
+            Engineering with clarity.
           </h2>
 
-          <p
-            className="text-gray-700 text-lg leading-relaxed font-orbitron"
-            data-aos="fade-up"
-            data-aos-delay="100"
-            data-aos-duration="800"
-          >
-            I’m a curious and creative web developer with a strong interest in building functional,
-            user-friendly, and visually engaging digital experiences. I enjoy solving problems with
-            code and take pride in writing clean, maintainable solutions. I’m constantly learning and
-            exploring new tools, frameworks, and best practices to stay current and improve as a developer.
-            <br /><br />
-            Outside of work, I stay active, follow football, and enjoy diving into new developments in tech.
-            <br /><br /><br />
-            Further down the page, you’ll find personal projects I’ve built in my spare time.
-          </p>
+          <div className="space-y-5 text-slate-400 leading-relaxed">
+            <p>
+              I’m a frontend-focused developer with a fullstack mindset. I care
+              deeply about structure, maintainability, and interaction quality.
+            </p>
+            <p>
+              My goal is to build digital experiences that are both performant
+              and intuitive — systems that feel refined, not improvised.
+            </p>
+            <p>
+              Outside of code, I stay active, follow football, and keep up with
+              emerging technologies and product trends.
+            </p>
+          </div>
+        </motion.div>
 
-          <button
-            onClick={() => setOpen(true)}
-            className="mt-6 inline-block bg-sky-500 text-white px-5 py-2 rounded font-semibold hover:bg-sky-400 transition"
-            data-aos="fade-up"
-            data-aos-delay="300"
-            data-aos-duration="500"
-          >
-            View My Skills
-          </button>
-        </div>
+        {/* RIGHT SIDE – SKILLS */}
+        <motion.div
+          className="lg:col-span-3"
+          initial={{ opacity: 0, y: 14 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.4, delay: 0.05 }}
+        >
+          <div className="flex flex-wrap gap-2 mb-8">
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setFilter(cat)}
+                className={`px-4 py-1.5 text-xs rounded-lg transition-colors ${
+                  filter === cat
+                    ? "bg-sky-500 text-black"
+                    : "bg-slate-800/70 text-slate-400 hover:text-sky-400"
+                }`}
+              >
+                {cat === "all"
+                  ? "All"
+                  : cat.charAt(0).toUpperCase() + cat.slice(1)}
+              </button>
+            ))}
+          </div>
 
-        {/* TEKNIKER/IKONER */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 text-center">
-          {techStack.map((tech) => (
-            <div
-              key={tech.name}
-              className="group bg-white border border-sky-200 p-4 rounded-lg hover:border-sky-500 transition transform hover:-translate-y-2 hover:scale-105 duration-300 shadow-md"
-            >
-              <img
-                src={tech.icon}
-                alt={tech.name}
-                className="h-12 mx-auto mb-2 filter grayscale group-hover:grayscale-0 transition duration-300"
-              />
-              <p className="text-sky-600 font-semibold">{tech.name}</p>
-            </div>
-          ))}
-        </div>
+          <div className="grid grid-cols-3 sm:grid-cols-4 gap-4">
+            <AnimatePresence mode="popLayout">
+              {filtered.map((tech) => (
+                <motion.div
+                  key={tech.name}
+                  layout
+                  initial={{ opacity: 0, y: 6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 6 }}
+                  transition={{ duration: 0.2 }}
+                  className="group relative flex flex-col items-center justify-center gap-2 py-3 px-2 rounded-md border border-slate-800 bg-slate-900/40 hover:border-sky-500/40 transition-all"
+                >
+                  {/* Subtil glow layer */}
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-300 pointer-events-none">
+                    <div className="absolute inset-0 rounded-md bg-sky-500/5 blur-md" />
+                  </div>
+
+                  <img
+                    src={tech.icon}
+                    alt={tech.name}
+                    className="h-9 grayscale group-hover:grayscale-0 transition duration-300"
+                  />
+
+                  <span className="text-[11px] tracking-wide text-slate-400 group-hover:text-sky-400 transition-colors">
+                    {tech.name}
+                  </span>
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </div>
+        </motion.div>
       </div>
-
-      {/* Modal för färdigheter */}
-      <SkillsModal isOpen={open} onClose={() => setOpen(false)} />
     </section>
   );
 };

@@ -1,49 +1,96 @@
-import simonImage from '../assets/simon.jpeg';
+import { motion } from "framer-motion";
+import { FiGithub, FiLinkedin, FiArrowDown } from "react-icons/fi";
+import simonImage from "../assets/simon.jpeg";
 
 const Hero = () => {
+  const handleScroll = (e) => {
+    e.preventDefault();
+    document.querySelector("#projects")?.scrollIntoView({
+      behavior: "smooth",
+    });
+  };
+
   return (
-    <section className="relative py-24 md:py-32 flex flex-col-reverse md:flex-row items-center justify-center px-6 md:px-20 bg-[#f7f8fa] text-gray-800 overflow-hidden">
-      {/* Skugga i toppen */}
-      <div className="absolute top-0 left-0 w-full h-8 shadow-[inset_0_8px_8px_-2px_rgba(0,0,0,0.1)] z-10" />
+    <section className="relative min-h-screen flex items-center text-slate-200 px-6 md:px-20 overflow-hidden">
+      {/* Background overlay (lets ParticleField show through) */}
+      <div className="absolute inset-0 z-0 bg-gradient-to-b from-[#020617]/90 via-[#020617]/70 to-transparent pointer-events-none" />
+      <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_30%_20%,rgba(56,189,248,0.10),transparent_60%)] pointer-events-none" />
 
-      {/* TEXTDEL */}
-      <div
-        className="md:w-1/2 text-center md:text-left space-y-6"
-        data-aos="fade-up"
-        data-aos-duration="1000"
-        data-aos-once="true"
-      >
-        <h1 className="text-4xl md:text-5xl font-extrabold font-orbitron">
-          HI, I'M <span className="text-sky-600">Simon</span>
-        </h1>
-        <p className="text-lg md:text-xl">
-          &lt;I'm a 29-year-old developer who loves&nbsp;
-          <span className="text-sky-500">coding ideas into reality</span> /&gt;
-        </p>
-        <div className="text-sky-600 font-orbitron font-semibold text-xl">
-          Aspiring Fullstack Developer
-        </div>
+      <div className="relative z-10 max-w-7xl mx-auto w-full grid md:grid-cols-2 gap-20 items-center py-32">
+        {/* TEXT SIDE */}
+        <motion.div
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+        >
+          <span className="inline-block mb-6 text-xs uppercase tracking-widest text-sky-400">
+            Fullstack developer · React · UX-focused
+          </span>
+
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.05] mb-6">
+            Building structured,
+            <br />
+            performant interfaces
+            <br />
+            with precision.
+          </h1>
+
+          <p className="text-lg text-slate-400 max-w-xl leading-relaxed mb-10">
+            I’m Simon — a fullstack-oriented frontend developer who cares about
+            clean architecture, refined interactions, and turning complex ideas
+            into intuitive digital experiences.
+          </p>
+
+          <div className="flex items-center gap-5">
+            <a
+              href="#projects"
+              onClick={handleScroll}
+              className="inline-flex items-center gap-2 px-6 py-3 bg-sky-500 text-black font-medium rounded-lg hover:bg-sky-400 transition-colors"
+            >
+              Explore Projects
+              <FiArrowDown className="w-4 h-4" />
+            </a>
+
+            <a
+              href="https://github.com/SimonGebru"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-3 rounded-lg border border-slate-700 hover:border-sky-500 hover:text-sky-400 transition-colors"
+              aria-label="GitHub"
+            >
+              <FiGithub className="w-5 h-5" />
+            </a>
+
+            <a
+              href="https://www.linkedin.com/in/simon-gebru/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-3 rounded-lg border border-slate-700 hover:border-sky-500 hover:text-sky-400 transition-colors"
+              aria-label="LinkedIn"
+            >
+              <FiLinkedin className="w-5 h-5" />
+            </a>
+          </div>
+        </motion.div>
+
+        {/* IMAGE SIDE */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.96 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5, delay: 0.15 }}
+          className="flex justify-center md:justify-end"
+        >
+          <div className="relative w-72 h-72 rounded-xl overflow-hidden border border-slate-700">
+            <img
+              src={simonImage}
+              alt="Simon Gebru"
+              className="w-full h-full object-cover"
+              loading="eager"
+            />
+            <div className="absolute inset-0 bg-gradient-to-tr from-sky-500/10 to-transparent" />
+          </div>
+        </motion.div>
       </div>
-
-      {/* 🖼️ BILD */}
-      <div
-        className="md:w-1/2 flex justify-center mb-12 md:mb-0"
-        data-aos="fade-up"
-        data-aos-duration="1000"
-        data-aos-delay="200"
-        data-aos-once="true"
-      >
-        <div className="relative w-64 h-64 bg-sky-500 p-2 rounded-lg shadow-lg">
-          <img
-            src={simonImage}
-            alt="Simon"
-            className="w-full h-full object-cover rounded-md border-4 border-white"
-          />
-        </div>
-      </div>
-
-      {/* 🔽 Skugga i botten */}
-      <div className="absolute bottom-0 left-0 w-full h-8 shadow-[inset_0_-8px_8px_-2px_rgba(0,0,0,0.1)] z-10" />
     </section>
   );
 };

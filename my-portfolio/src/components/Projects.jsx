@@ -1,189 +1,222 @@
+import { useState, useMemo } from "react";
+import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { FiGithub, FiExternalLink, FiSearch } from "react-icons/fi";
 import { projects } from "../data/projects";
 import { extraProjects } from "../data/extraProjects";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChrome, faGithub } from "@fortawesome/free-brands-svg-icons";
+
+const allProjects = [...projects, ...extraProjects];
+const allTags = Array.from(new Set(allProjects.flatMap((p) => p.tags || [])));
 
 const Projects = () => {
-  const featuredProjects = projects.slice(0, 3);
-  const remainingProjects = [...projects.slice(3), ...extraProjects];
+  const [search, setSearch] = useState("");
+  const [selectedTag, setSelectedTag] = useState(null);
+  const [showAll, setShowAll] = useState(false);
+
+  const filtered = useMemo(() => {
+    let result = allProjects;
+
+    if (search) {
+      const q = search.toLowerCase();
+      result = result.filter(
+        (p) =>
+          p.title.toLowerCase().includes(q) ||
+          p.description?.toLowerCase().includes(q) ||
+          p.tags?.some((t) => t.toLowerCase().includes(q))
+      );
+    }
+
+    if (selectedTag) {
+      result = result.filter((p) => p.tags?.includes(selectedTag));
+    }
+
+    return result;
+  }, [search, selectedTag]);
+
+  const displayed = showAll || search || selectedTag ? filtered : filtered.slice(0, 3);
 
   return (
     <section
       id="projects"
-      className="relative bg-[#f8fafc] text-gray-800 py-24 px-6 md:px-20 overflow-hidden"
+      className="relative py-28 px-6 md:px-20 text-slate-200 overflow-hidden"
     >
-      {/* 🔆 Ljus bakgrundsdekor */}
-      <div className="absolute inset-0 bg-gradient-to-tr from-sky-100/40 to-transparent pointer-events-none z-0" />
-      <div className="absolute top-[10%] left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-sky-300 opacity-20 rounded-full blur-3xl pointer-events-none z-0" />
+      {/*  Background overlays (allows ParticleField to show through) */}
+      <div className="absolute inset-0 z-0 bg-gradient-to-b from-[#020617]/85 via-[#020617]/65 to-transparent pointer-events-none" />
+      <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_70%_30%,rgba(56,189,248,0.10),transparent_55%)] pointer-events-none" />
 
-      {/* 🧠 Rubrik */}
-      <div className="relative z-10 text-center mb-12">
-        <h2
-          className="text-4xl font-bold text-sky-500 uppercase"
-          data-aos="fade-up"
-          data-aos-duration="600"
+      <div className="relative z-10 max-w-6xl mx-auto">
+        {/* HEADER */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.4 }}
+          className="mb-10"
         >
-          Mina Projekt
-        </h2>
-        <p
-          className="text-gray-600 mt-2"
-          data-aos="fade-up"
-          data-aos-delay="100"
-          data-aos-duration="600"
-        >
-          Utforska några av mina favoritbyggen
-        </p>
-      </div>
+          <span className="text-xs uppercase tracking-widest text-sky-400">
+            Work
+          </span>
 
-      {/* ⭐️ 3 Framhävda Projekt */}
-      <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-        {featuredProjects.map((proj, index) => (
-          <Link
-            key={proj.id}
-            to={`/project/${proj.id}`}
-            className="group bg-white border border-sky-300 rounded-2xl p-5 shadow-md hover:scale-105 hover:shadow-lg transition-all duration-300 flex flex-col relative"
-            data-aos="fade-up"
-            data-aos-delay={index * 150}
-            data-aos-duration="700"
-          >
-            {/* 🔗 Ikoner uppe till höger */}
-            <div className="absolute top-4 right-4 flex gap-3 z-10">
-              {proj.liveLink && (
-                <a
-                  href={proj.liveLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  title="Se liveprojektet"
-                  onClick={(e) => e.stopPropagation()}
-                  className="text-sky-500 bg-white p-2 rounded-full shadow hover:text-sky-700 transition text-xl"
-                >
-                  <FontAwesomeIcon icon={faChrome} />
-                </a>
-              )}
-              {proj.github && (
-                <a
-                  href={proj.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  title="Visa källkod på GitHub"
-                  onClick={(e) => e.stopPropagation()}
-                  className="text-gray-800 bg-white p-2 rounded-full shadow hover:text-black transition text-xl"
-                >
-                  <FontAwesomeIcon icon={faGithub} />
-                </a>
-              )}
-            </div>
+          <h2 className="text-3xl md:text-4xl font-bold mt-2 mb-3">
+            Selected Projects
+          </h2>
 
-            <img
-              src={proj.image}
-              alt={proj.title}
-              className="w-full h-40 object-cover rounded-xl mb-4"
+          <p className="text-slate-400 max-w-lg">
+            A selection of full-stack applications, frontend builds, and experimental tools.
+          </p>
+        </motion.div>
+
+        {/* SEARCH + FILTERS */}
+        <div className="flex flex-col md:flex-row gap-4 mb-10">
+          <div className="relative flex-1 max-w-sm">
+            <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 w-4 h-4" />
+            <input
+              type="text"
+              placeholder="Search projects..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="w-full pl-9 pr-4 py-2.5 text-sm bg-slate-900/60 border border-slate-800 rounded-lg focus:outline-none focus:ring-1 focus:ring-sky-500 placeholder:text-slate-500"
             />
-            <h3 className="text-xl font-semibold text-sky-500 mb-2">{proj.title}</h3>
-            <p className="text-gray-700 text-sm">{proj.description}</p>
-          </Link>
-        ))}
-      </div>
+          </div>
 
-      {/* 📚 Horisontell Bokhylla */}
-      {remainingProjects.length > 0 && (
-        <div className="relative z-10 mt-20">
-          <h3
-            className="text-center text-sky-500 font-bold text-lg mb-10"
-            data-aos="fade-up"
-          >
-            Fler projekt
-          </h3>
+          <div className="flex flex-wrap gap-2">
+            <button
+              onClick={() => setSelectedTag(null)}
+              className={`px-3 py-1.5 text-xs rounded border transition ${
+                !selectedTag
+                  ? "bg-sky-500 text-black border-sky-500"
+                  : "border-slate-700 text-slate-400 hover:border-sky-500/40"
+              }`}
+            >
+              All
+            </button>
 
-          <div className="relative overflow-x-auto px-4 pb-20">
-            <div className="flex min-w-max" style={{ perspective: "1200px" }}>
-              {remainingProjects.map((proj, index) => (
-                <Link
-                  key={proj.id}
-                  to={`/project/${proj.id}`}
-                  className="relative group w-[200px] h-[180px] flex-shrink-0"
-                  data-aos="flip-left"
-                  data-aos-delay={index * 100}
-                  data-aos-duration="700"
-                >
-                  <div className="relative w-full h-full transition-transform duration-500 custom-rotate group-hover:rotate-y-0 group-hover:translate-z-10">
-                    {/* Bokframsida */}
-                    <div
-                      className="absolute inset-0 rounded-md bg-white border border-sky-300 shadow-md flex flex-col justify-center items-center text-center text-sky-500 font-semibold text-xs px-2"
-                      style={{
-                        transform: "rotateY(0deg)",
-                        backfaceVisibility: "hidden",
-                      }}
-                    >
-                      {/* 🔗 Ikoner uppe till höger */}
-                      <div className="absolute top-2 right-2 flex gap-2">
-                        {proj.liveLink && (
-                          <a
-                            href={proj.liveLink}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            title="Se liveprojektet"
-                            onClick={(e) => e.stopPropagation()}
-                            className="text-sky-500 hover:text-sky-700 transition text-sm"
-                          >
-                            <FontAwesomeIcon icon={faChrome} />
-                          </a>
-                        )}
-                        {proj.github && (
-                          <a
-                            href={proj.github}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            title="Visa källkod på GitHub"
-                            onClick={(e) => e.stopPropagation()}
-                            className="text-gray-700 hover:text-black transition text-sm"
-                          >
-                            <FontAwesomeIcon icon={faGithub} />
-                          </a>
-                        )}
-                      </div>
-
-                      {proj.image && (
-                        <img
-                          src={proj.image}
-                          alt={proj.title}
-                          className="w-full h-16 object-fit rounded-t-md mb-2"
-                        />
-                      )}
-                      <p className="text-sm font-bold">{proj.title}</p>
-                      <p className="text-[10px] text-gray-500 mt-1 px-1 line-clamp-2">
-                        {proj.description}
-                      </p>
-                    </div>
-
-                    {/* Bokrygg */}
-                    <div
-                      className="absolute top-0 right-[-20px] w-[20px] h-full bg-sky-200 rounded-r-md"
-                      style={{
-                        transform: "rotateY(90deg)",
-                        transformOrigin: "left center",
-                        backfaceVisibility: "hidden",
-                      }}
-                    ></div>
-                  </div>
-
-                  {/* Skugga undertill */}
-                  <div className="absolute bottom-0 left-0 w-full h-2 bg-black/10 blur-sm rounded-b-md scale-95 z-[-1]" />
-                </Link>
-              ))}
-            </div>
-
-            {/* Hylla */}
-            <div className="absolute bottom-4 left-4 right-4 h-[6px] bg-gray-300 rounded-full mx-auto max-w-[95%]" />
+            {allTags.slice(0, 6).map((tag) => (
+              <button
+                key={tag}
+                onClick={() => setSelectedTag(selectedTag === tag ? null : tag)}
+                className={`px-3 py-1.5 text-xs rounded border transition ${
+                  selectedTag === tag
+                    ? "bg-sky-500 text-black border-sky-500"
+                    : "border-slate-700 text-slate-400 hover:border-sky-500/40"
+                }`}
+              >
+                {tag}
+              </button>
+            ))}
           </div>
         </div>
-      )}
 
-      {/* 🔽 Skugga som övergång till Contact */}
-      <div className="absolute bottom-0 left-0 w-full h-12 shadow-[inset_0_-20px_20px_-10px_rgba(0,0,0,0.2)] z-10" />
+        {/* PROJECT GRID */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {displayed.map((project, i) => (
+            <ProjectCard key={project.id} project={project} index={i} />
+          ))}
+        </div>
+
+        {/* SHOW ALL BUTTON */}
+        {!search && !selectedTag && filtered.length > 3 && (
+          <div className="mt-10 text-center">
+            <button
+              onClick={() => setShowAll(!showAll)}
+              className="px-6 py-2.5 text-sm font-medium border border-slate-700 rounded-lg text-slate-400 hover:text-white hover:border-sky-500/40 transition-colors"
+            >
+              {showAll ? "Show Less" : `Show All Projects (${filtered.length})`}
+            </button>
+          </div>
+        )}
+
+        {/* EMPTY STATE */}
+        {filtered.length === 0 && (
+          <p className="text-center text-slate-500 py-12">No projects found.</p>
+        )}
+      </div>
     </section>
   );
 };
+
+/* =============================
+   PROJECT CARD COMPONENT
+============================= */
+
+const ProjectCard = ({ project, index }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 16 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+    transition={{ duration: 0.4, delay: index * 0.05 }}
+    className="group relative border border-slate-800 rounded-xl bg-slate-900/40 overflow-hidden hover:border-sky-500/40 transition-colors"
+  >
+    {/* subtle glow on hover */}
+    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-300 pointer-events-none">
+      <div className="absolute inset-0 bg-sky-500/5 blur-xl" />
+    </div>
+
+    <Link to={`/project/${project.id}`} className="block">
+      {/* IMAGE */}
+      <div className="aspect-video overflow-hidden">
+        <img
+          src={project.image}
+          alt={project.title}
+          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          loading="lazy"
+        />
+      </div>
+
+      {/* CONTENT */}
+      <div className="p-5 flex flex-col h-full">
+        {/* TAGS */}
+        <div className="flex flex-wrap gap-1.5 mb-3">
+          {project.tags?.slice(0, 3).map((tag) => (
+            <span
+              key={tag}
+              className="text-[10px] px-2 py-1 border border-slate-700 rounded text-slate-400"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+
+        <h3 className="font-semibold text-lg mb-2 group-hover:text-sky-400 transition-colors">
+          {project.title}
+        </h3>
+
+        <p className="text-sm text-slate-400 flex-1 mb-4">
+          {project.description}
+        </p>
+
+        <div className="flex items-center gap-3 pt-3 border-t border-slate-800">
+          {project.github && (
+            <a
+              href={project.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
+              className="text-xs text-slate-400 hover:text-white flex items-center gap-1"
+            >
+              <FiGithub className="w-3.5 h-3.5" />
+              Source
+            </a>
+          )}
+
+          {project.liveLink && (
+            <a
+              href={project.liveLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
+              className="text-xs text-slate-400 hover:text-white flex items-center gap-1"
+            >
+              <FiExternalLink className="w-3.5 h-3.5" />
+              Live
+            </a>
+          )}
+
+          <span className="ml-auto text-xs text-sky-400">Case Study →</span>
+        </div>
+      </div>
+    </Link>
+  </motion.div>
+);
 
 export default Projects;

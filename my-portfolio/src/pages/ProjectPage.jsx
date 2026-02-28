@@ -1,137 +1,321 @@
-import { useParams } from 'react-router-dom';
-import { projects } from '../data/projects';
-import { extraProjects } from '../data/extraProjects';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-import { faGithub, faChrome } from '@fortawesome/free-brands-svg-icons';
-import { useEffect } from 'react';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
+import { useMemo, useEffect } from "react";
+import { useParams, Link, useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+import {
+  FiArrowLeft,
+  FiGithub,
+  FiExternalLink,
+  FiChevronLeft,
+  FiChevronRight,
+} from "react-icons/fi";
+
+import { projects } from "../data/projects";
+import { extraProjects } from "../data/extraProjects";
+
+const allProjects = [...projects, ...extraProjects];
+
+const scrollToId = (id) => {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.scrollIntoView({ behavior: "smooth", block: "start" });
+};
 
 const ProjectPage = () => {
   const { id } = useParams();
-  const allProjects = [...projects, ...extraProjects];
-  const project = allProjects.find((p) => p.id === id);
+  const navigate = useNavigate();
 
+  const currentIndex = useMemo(
+    () => allProjects.findIndex((p) => p.id === id),
+    [id]
+  );
+
+  const project = currentIndex >= 0 ? allProjects[currentIndex] : null;
+  const prevProject = currentIndex > 0 ? allProjects[currentIndex - 1] : null;
+  const nextProject =
+    currentIndex >= 0 && currentIndex < allProjects.length - 1
+      ? allProjects[currentIndex + 1]
+      : null;
+
+  // Scroll to top when changing project
   useEffect(() => {
-    AOS.refresh();
-  }, []);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [id]);
 
-  if (!project) return <div className="p-6 text-white">Projektet hittades inte.</div>;
+  if (!project) {
+    return (
+      <div className="relative min-h-screen text-slate-200 flex items-center justify-center px-6 overflow-hidden">
+        {/* overlays instead of solid bg */}
+        <div className="absolute inset-0 z-0 bg-gradient-to-b from-[#020617]/85 via-[#020617]/70 to-[#020617]/55 pointer-events-none" />
+        <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_30%_25%,rgba(56,189,248,0.12),transparent_55%)] pointer-events-none" />
 
-  const handleBack = () => {
-    window.location.href = '/#projects';
+        <div className="relative z-10 text-center max-w-md">
+          <h1 className="text-2xl font-bold mb-3">Project not found</h1>
+          <p className="text-slate-400 mb-6">
+            The project you’re looking for doesn’t exist (or the URL is wrong).
+          </p>
+          <Link
+            to="/"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-slate-800 bg-slate-900/40 text-slate-300 hover:text-white hover:border-sky-500/40 transition-colors"
+          >
+            <FiArrowLeft className="w-4 h-4" />
+            Back to home
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  // Map your existing data -> case study structure
+  const tagline = project.tagline || project.description || "";
+  const overview = project.overview || project.details || "";
+  const techStack = project.techStack || project.technologies || [];
+  const features = project.features || null;
+  const challenges = project.challenges || null;
+  const learned = project.learned || null;
+  const tags = project.tags || [];
+
+  const tocItems = [
+    ...(overview ? [{ id: "overview", label: "Overview" }] : []),
+    ...(features?.length ? [{ id: "features", label: "Features" }] : []),
+    ...(techStack?.length ? [{ id: "tech-stack", label: "Tech Stack" }] : []),
+    ...(challenges ? [{ id: "challenges", label: "Challenges" }] : []),
+    ...(learned ? [{ id: "learned", label: "What I learned" }] : []),
+  ];
+
+  const handleBackToProjects = () => {
+    navigate("/");
+    requestAnimationFrame(() => {
+      setTimeout(() => scrollToId("projects"), 80);
+    });
   };
 
   return (
-    <div className="min-h-screen bg-[#1e1f25] text-white py-16 px-6 md:px-20">
-      <div className="max-w-4xl mx-auto">
+    <div className="relative min-h-screen text-slate-200 pt-24 pb-20 px-6 md:px-20 overflow-hidden">
+      {/* Page overlays (lets ParticleField show through) */}
+      <div className="absolute inset-0 z-0 bg-gradient-to-b from-[#020617]/85 via-[#020617]/70 to-transparent pointer-events-none" />
+      <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_70%_20%,rgba(56,189,248,0.10),transparent_55%)] pointer-events-none" />
 
-        {/* 🔙 Back Button */}
-        <button
-          onClick={handleBack}
-          className="mb-8 flex items-center gap-2 text-lime-400 hover:text-white transition duration-300"
-          data-aos="fade-in"
-          data-aos-duration="500"
+      <div className="relative z-10 max-w-6xl mx-auto">
+        {/* Back */}
+        <motion.div
+          initial={{ opacity: 0, x: -10 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.35 }}
+          className="mb-8"
         >
-          <FontAwesomeIcon icon={faArrowLeft} /> Back to Projects
-        </button>
+          <button
+            onClick={handleBackToProjects}
+            className="inline-flex items-center gap-2 text-sm text-slate-400 hover:text-white transition-colors rounded px-2 py-1 -ml-2"
+          >
+            <FiArrowLeft className="w-4 h-4" />
+            Back to projects
+          </button>
+        </motion.div>
 
-        {/* 🔠 Title */}
-        <h1
-          className="text-5xl font-bold text-lime-400 mb-6 text-center drop-shadow-md"
-          data-aos="fade-up"
-          data-aos-duration="600"
-        >
-          {project.title}
-        </h1>
+        <div className="grid lg:grid-cols-4 gap-10">
+          {/* TOC */}
+          <motion.aside
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: 0.05 }}
+            className="hidden lg:block"
+          >
+            {tocItems.length > 0 && (
+              <div className="sticky top-28">
+                <p className="text-[11px] uppercase tracking-widest text-slate-500 mb-3">
+                  On this page
+                </p>
+                <nav className="space-y-1">
+                  {tocItems.map((item) => (
+                    <a
+                      key={item.id}
+                      href={`#${item.id}`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        scrollToId(item.id);
+                      }}
+                      className="block text-sm text-slate-400 hover:text-white py-1.5 transition-colors border-l-2 border-transparent hover:border-sky-500 pl-3"
+                    >
+                      {item.label}
+                    </a>
+                  ))}
+                </nav>
+              </div>
+            )}
+          </motion.aside>
 
-        {/* 🖼️ Image */}
-        <div
-          className="rounded-xl overflow-hidden shadow-xl border border-lime-500 mb-10 bg-black"
-          data-aos="fade-up"
-          data-aos-duration="600"
-        >
-          <img
-            src={project.image}
-            alt={project.title}
-            className="w-full h-auto max-h-[700px] object-contain rounded-xl"
-          />
-        </div>
+          {/* MAIN */}
+          <motion.main
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: 0.08 }}
+            className="lg:col-span-3"
+          >
+            {/* Image */}
+            <div className="rounded-xl overflow-hidden border border-slate-800 mb-8 bg-slate-900/40">
+              <div className="aspect-video overflow-hidden">
+                <img
+                  src={project.image}
+                  alt={project.title}
+                  className="w-full h-full object-cover"
+                  loading="eager"
+                />
+              </div>
+            </div>
 
-        {/* 📝 Details */}
-        <p
-          className="text-lg text-gray-300 leading-relaxed mb-8"
-          data-aos="fade-up"
-          data-aos-delay="100"
-          data-aos-duration="800"
-        >
-          {project.details}
-        </p>
+            {/* Title / meta */}
+            <div className="mb-10">
+              {tags?.length > 0 && (
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {tags.slice(0, 6).map((tag) => (
+                    <span
+                      key={tag}
+                      className="text-[10px] px-2 py-1 border border-slate-700 rounded text-slate-400 bg-slate-900/30"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              )}
 
-        {/* 🔗 Links with Tooltips */}
-        <div className="mt-4 mb-10 flex flex-col sm:flex-row gap-4 justify-center items-center">
-          {project.liveLink && (
-            <a
-              href={project.liveLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              title="Se liveprojektet"
-              className="group relative flex items-center gap-2 bg-lime-500 text-black font-semibold py-2 px-6 rounded-lg shadow-md hover:bg-lime-400 transition"
-              data-aos="fade-up"
-              data-aos-delay="400"
-            >
-              <FontAwesomeIcon icon={faChrome} />
-              Live Preview
-              {/* Tooltip */}
-              <span className="absolute -top-10 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 bg-black text-white text-sm rounded px-3 py-1 transition duration-300 pointer-events-none z-10">
-                Se liveprojektet
-              </span>
-            </a>
-          )}
+              <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-2">
+                {project.title}
+              </h1>
 
-          {project.github && (
-            <a
-              href={project.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              title="Gå till GitHub-repo"
-              className="group relative flex items-center gap-2 bg-white text-black font-semibold py-2 px-6 rounded-lg shadow-md hover:bg-gray-300 transition"
-              data-aos="fade-up"
-              data-aos-delay="500"
-            >
-              <FontAwesomeIcon icon={faGithub} />
-              GitHub Repo
-              {/* Tooltip */}
-              <span className="absolute -top-10 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 bg-black text-white text-sm rounded px-3 py-1 transition duration-300 pointer-events-none z-10">
-                Gå till GitHub-repo
-              </span>
-            </a>
-          )}
-        </div>
+              {tagline && (
+                <p className="text-lg text-slate-400 leading-relaxed">
+                  {tagline}
+                </p>
+              )}
 
-        {/* 🛠 Technologies */}
-        <h2
-          className="text-2xl font-semibold text-lime-400 mb-3"
-          data-aos="fade-up"
-          data-aos-delay="600"
-        >
-          Used Technologies
-        </h2>
+              {/* Links */}
+              <div className="flex items-center gap-3 mt-6 flex-wrap">
+                {project.github && (
+                  <a
+                    href={project.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-4 py-2 text-sm border border-slate-800 bg-slate-900/40 rounded-lg text-slate-300 hover:text-white hover:border-sky-500/40 transition-colors"
+                  >
+                    <FiGithub className="w-4 h-4" />
+                    Source Code
+                  </a>
+                )}
 
-        <div className="max-h-60 overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-lime-500 scrollbar-track-gray-700">
-          <ul className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            {project.technologies.map((tech, index) => (
-              <li
-                key={tech}
-                data-aos="fade-up"
-                data-aos-delay={700 + index * 100} 
-                className="bg-gray-800 text-white py-2 px-4 rounded shadow text-center hover:bg-lime-600 transition"
-              >
-                {tech}
-              </li>
-            ))}
-          </ul>
+                {project.liveLink && (
+                  <a
+                    href={project.liveLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-4 py-2 text-sm bg-sky-500 text-black rounded-lg font-medium hover:bg-sky-400 transition-colors"
+                  >
+                    <FiExternalLink className="w-4 h-4" />
+                    Live Demo
+                  </a>
+                )}
+              </div>
+            </div>
+
+            {/* Content */}
+            <div className="space-y-12">
+              {overview && (
+                <section id="overview">
+                  <h2 className="text-xl font-semibold mb-3">Overview</h2>
+                  <p className="text-slate-400 leading-relaxed whitespace-pre-line">
+                    {overview}
+                  </p>
+                </section>
+              )}
+
+              {features?.length > 0 && (
+                <section id="features">
+                  <h2 className="text-xl font-semibold mb-3">Features</h2>
+                  <ul className="space-y-2">
+                    {features.map((f, i) => (
+                      <li
+                        key={i}
+                        className="flex items-start gap-3 text-slate-400"
+                      >
+                        <span className="w-1.5 h-1.5 rounded-full bg-sky-400 mt-2 shrink-0" />
+                        <span>{f}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+              )}
+
+              {techStack?.length > 0 && (
+                <section id="tech-stack">
+                  <h2 className="text-xl font-semibold mb-3">Tech Stack</h2>
+                  <div className="flex flex-wrap gap-2">
+                    {techStack.map((t) => (
+                      <span
+                        key={t}
+                        className="text-xs px-3 py-1.5 border border-slate-800 rounded-lg bg-slate-900/40 text-slate-300"
+                      >
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                </section>
+              )}
+
+              {challenges && (
+                <section id="challenges">
+                  <h2 className="text-xl font-semibold mb-3">Challenges</h2>
+                  <p className="text-slate-400 leading-relaxed whitespace-pre-line">
+                    {challenges}
+                  </p>
+                </section>
+              )}
+
+              {learned && (
+                <section id="learned">
+                  <h2 className="text-xl font-semibold mb-3">What I learned</h2>
+                  <p className="text-slate-400 leading-relaxed whitespace-pre-line">
+                    {learned}
+                  </p>
+                </section>
+              )}
+            </div>
+
+            {/* Prev / Next */}
+            <div className="mt-16 pt-8 border-t border-slate-800 flex items-center justify-between gap-6">
+              {prevProject ? (
+                <Link
+                  to={`/project/${prevProject.id}`}
+                  className="flex items-center gap-3 text-sm text-slate-400 hover:text-white transition-colors group"
+                >
+                  <FiChevronLeft className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" />
+                  <span>
+                    <span className="block text-[11px] uppercase tracking-widest text-slate-500">
+                      Previous
+                    </span>
+                    {prevProject.title}
+                  </span>
+                </Link>
+              ) : (
+                <div />
+              )}
+
+              {nextProject ? (
+                <Link
+                  to={`/project/${nextProject.id}`}
+                  className="flex items-center gap-3 text-sm text-slate-400 hover:text-white transition-colors text-right group ml-auto"
+                >
+                  <span>
+                    <span className="block text-[11px] uppercase tracking-widest text-slate-500">
+                      Next
+                    </span>
+                    {nextProject.title}
+                  </span>
+                  <FiChevronRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+                </Link>
+              ) : (
+                <div />
+              )}
+            </div>
+          </motion.main>
         </div>
       </div>
     </div>

@@ -1,4 +1,4 @@
-import React from 'react';
+import { motion, AnimatePresence } from "framer-motion";
 
 const courses = [
   { name: "HTML & CSS", weeks: "36–41", points: "30 yhp" },
@@ -17,35 +17,61 @@ const courses = [
 ];
 
 const EducationModal = ({ isOpen, onClose }) => {
-  if (!isOpen) return null;
-
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-end md:items-center z-50">
-      <div className="bg-white max-w-4xl w-full rounded-t-lg md:rounded-lg p-6 relative overflow-y-auto max-h-[80vh] animate-slide-up">
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-4 text-2xl text-gray-500 hover:text-gray-800"
-        >
-          &times;
-        </button>
+    <AnimatePresence>
+      {isOpen && (
+        <>
+          {/* Overlay */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50"
+            onClick={onClose}
+          />
 
-        <h2 className="text-3xl font-bold text-lime-600 mb-4 text-center">
-          Kurser i utbildningen
-        </h2>
+          {/* Modal */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 30 }}
+            transition={{ duration: 0.25 }}
+            className="fixed inset-0 flex justify-center items-center z-50 px-6"
+          >
+            <div className="bg-slate-900 border border-slate-800 rounded-xl w-full max-w-4xl max-h-[80vh] overflow-y-auto p-8 relative">
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-          {courses.map((course, index) => (
-            <div
-              key={index}
-              className="bg-gray-100 p-4 rounded-lg border border-lime-400 shadow"
-            >
-              <h3 className="font-semibold text-lg mb-1 text-gray-800">{course.name}</h3>
-              
+              <button
+                onClick={onClose}
+                className="absolute top-4 right-5 text-slate-400 hover:text-white text-xl"
+              >
+                ×
+              </button>
+
+              <h2 className="text-2xl font-bold mb-6 text-sky-400">
+                Program Curriculum
+              </h2>
+
+              <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
+                {courses.map((course, index) => (
+                  <div
+                    key={index}
+                    className="border border-slate-800 rounded-lg p-4 bg-slate-900/40 hover:border-sky-500/30 transition-colors"
+                  >
+                    <h3 className="text-sm font-medium text-slate-200 mb-1">
+                      {course.name}
+                    </h3>
+                    <p className="text-xs text-slate-500">
+                      {course.weeks} · {course.points}
+                    </p>
+                  </div>
+                ))}
+              </div>
+
             </div>
-          ))}
-        </div>
-      </div>
-    </div>
+          </motion.div>
+        </>
+      )}
+    </AnimatePresence>
   );
 };
 

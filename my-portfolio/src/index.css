@@ -2,28 +2,77 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Bokens startposition (bakåtlutad) */
-.custom-rotate {
-    transform: rotateY(-60deg);
-    transform-style: preserve-3d;
-  }
-  
-  /* Hover-effekt för att visa framsidan */
-  .group:hover .group-hover\:rotate-y-0 {
-    transform: rotateY(0deg);
-  }
-  
-  /* Extra: när boken "kommer ut" i Z-led vid hover */
-  .group:hover .group-hover\:translate-z-10 {
-    transform: translateZ(20px) rotateY(0deg);
-  }
 
-  html,
-body {
-  @apply bg-[#1e1f25] text-white m-0 p-0;
+:root {
+  --background: 0 0% 100%;
+  --foreground: 222 47% 11%;
+
+  --muted: 210 40% 96%;
+  --muted-foreground: 215 16% 47%;
+
+  --border: 214 32% 91%;
+  --input: 214 32% 91%;
+  --ring: 215 20% 65%;
+
+  --primary: 210 70% 45%;
+  --primary-foreground: 0 0% 100%;
+
+  --secondary: 210 40% 96%;
+  --secondary-foreground: 222 47% 11%;
+
+  --card: 0 0% 100%;
+  --card-foreground: 222 47% 11%;
 }
 
-html, body, #root {
+/* Dark mode via: <html class="dark"> or <body class="dark"> */
+.dark {
+  --background: 225 25% 7%;
+  --foreground: 220 15% 88%;
+
+  --muted: 225 18% 12%;
+  --muted-foreground: 220 10% 65%;
+
+  --border: 225 14% 15%;
+  --input: 225 14% 15%;
+  --ring: 210 35% 55%;
+
+  --primary: 200 55% 55%;
+  --primary-foreground: 225 25% 7%;
+
+  --secondary: 225 18% 12%;
+  --secondary-foreground: 220 15% 88%;
+
+  --card: 225 18% 10%;
+  --card-foreground: 220 15% 88%;
+}
+
+
+/* Bokens startposition (bakåtlutad) */
+.custom-rotate {
+  transform: rotateY(-60deg);
+  transform-style: preserve-3d;
+}
+
+/* Hover-effekt för att visa framsidan */
+.group:hover .group-hover\:rotate-y-0 {
+  transform: rotateY(0deg);
+}
+
+/* Extra: när boken "kommer ut" i Z-led vid hover */
+.group:hover .group-hover\:translate-z-10 {
+  transform: translateZ(20px) rotateY(0deg);
+}
+
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body,
+#root {
   height: 100%;
 }
 
@@ -33,10 +82,60 @@ html {
 
 @layer base {
   body {
+    /* IMPORTANT: do NOT hardcode bg-[#1e1f25] here.
+       Use tokens so sections + ParticleField can work. */
     @apply font-sans;
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
   }
 
   .font-orbitron {
-    font-family: 'Orbitron', sans-serif;
+    font-family: "Orbitron", sans-serif;
+  }
+}
+
+
+@layer components {
+  .container-wide {
+    @apply max-w-6xl mx-auto px-6 md:px-20;
+  }
+
+  .section-padding {
+    @apply py-20;
+  }
+
+  /* Viktigt: Låt ParticleField synas subtilt genom ytorna */
+  .section-base {
+    background-color: color-mix(in hsl, hsl(var(--background)) 88%, transparent);
+    color: hsl(var(--foreground));
+  }
+
+  .section-raised {
+    background-color: color-mix(in hsl, hsl(var(--muted)) 88%, transparent);
+    color: hsl(var(--foreground));
+  }
+
+  .badge-style {
+    @apply inline-flex items-center rounded-full border px-3 py-1 text-xs font-medium;
+    border-color: hsl(var(--border));
+    color: hsl(var(--muted-foreground));
+    background-color: color-mix(in hsl, hsl(var(--background)) 85%, transparent);
+  }
+
+  .card-surface {
+    @apply rounded-xl border;
+    border-color: hsl(var(--border));
+    background-color: color-mix(in hsl, hsl(var(--card)) 92%, transparent);
+    color: hsl(var(--card-foreground));
+  }
+
+  .card-hover {
+    @apply transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg;
+  }
+
+  .focus-ring {
+    @apply focus:outline-none focus:ring-2 focus:ring-offset-2;
+    --tw-ring-color: hsl(var(--ring));
+    --tw-ring-offset-color: hsl(var(--background));
   }
 }

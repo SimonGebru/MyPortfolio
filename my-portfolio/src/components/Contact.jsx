@@ -1,18 +1,85 @@
-import { useState } from "react";
-import toast, { Toaster } from "react-hot-toast";
-import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { useMemo, useState } from "react";
+import { motion } from "framer-motion";
+import toast from "react-hot-toast";
+import { FiGithub, FiLinkedin, FiCopy, FiSend, FiCheck } from "react-icons/fi";
+
+const toastStyle = {
+  background: "hsl(225 22% 10%)",
+  color: "hsl(220 15% 88%)",
+  border: "1px solid hsl(225 14% 15%)",
+  fontSize: "13px",
+};
+
+const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
 const Contact = () => {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
-  const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState({});
+  const [submitting, setSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
 
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+  const social = useMemo(
+    () => [
+      {
+        icon: FiGithub,
+        label: "GitHub",
+        value: "SimonGebru",
+        href: "https://github.com/SimonGebru",
+      },
+      {
+        icon: FiLinkedin,
+        label: "LinkedIn",
+        value: "simon-gebru",
+        href: "https://www.linkedin.com/in/simon-gebru-80b21b1b8",
+      },
+    ],
+    []
+  );
+
+  const validate = () => {
+    const errs = {};
+    if (!form.name.trim()) errs.name = "Name is required";
+    if (!form.email.trim()) errs.email = "Email is required";
+    else if (!isValidEmail(form.email)) errs.email = "Invalid email address";
+    if (!form.message.trim()) errs.message = "Message is required";
+    else if (form.message.length > 1000) errs.message = "Max 1000 characters";
+    return errs;
+  };
+
+  const inputClass = (field) =>
+    [
+      "w-full px-4 py-2.5 text-sm rounded-lg transition-colors",
+      "bg-slate-900/50 border",
+      "placeholder:text-slate-500",
+      "focus:outline-none focus:ring-1 focus:ring-sky-500",
+      errors[field]
+        ? "border-red-500/60"
+        : "border-slate-800 hover:border-sky-500/30",
+    ].join(" ");
+
+  const copyToClipboard = async (text, label) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      toast.success(`${label} copied`, { style: toastStyle });
+    } catch {
+      toast.error("Copy failed", { style: toastStyle });
+    }
+  };
+
+  const handleChange = (field, value) => {
+    setForm((p) => ({ ...p, [field]: value }));
+    setErrors((p) => ({ ...p, [field]: "" }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
+    if (submitting) return;
+
+    const errs = validate();
+    setErrors(errs);
+    if (Object.keys(errs).length > 0) return;
+
+    setSubmitting(true);
 
     try {
       const res = await fetch("https://formspree.io/f/xvganbvg", {
@@ -21,119 +88,188 @@ const Contact = () => {
         body: JSON.stringify(form),
       });
 
-      if (res.ok) {
-        toast.success("Tack för ditt meddelande!");
-        setForm({ name: "", email: "", message: "" });
-      } else {
-        toast.error("Något gick fel, försök igen.");
-      }
-    } catch (err) {
-      toast.error("Nätverksfel. Försök igen.");
+      if (!res.ok) throw new Error("Bad response");
+
+      toast.success("Message sent!", { style: toastStyle });
+      setSubmitted(true);
+      setForm({ name: "", email: "", message: "" });
+
+      setTimeout(() => setSubmitted(false), 2500);
+    } catch {
+      toast.error("Something went wrong. Try again.", { style: toastStyle });
     } finally {
-      setLoading(false);
+      setSubmitting(false);
     }
   };
 
   return (
     <section
       id="contact"
-      className="relative bg-[#f8fafc] text-gray-800 py-20 px-6 md:px-20 overflow-hidden"
+      className="relative py-28 px-6 md:px-20 text-slate-200 overflow-hidden"
     >
-      <Toaster position="top-center" />
-      <div className="absolute inset-0 bg-gradient-to-br from-sky-100/40 to-transparent pointer-events-none z-0" />
+      {/* overlays instead of solid bg so ParticleField shows through */}
+      <div className="absolute inset-0 z-0 bg-gradient-to-b from-[#020617]/85 via-[#020617]/70 to-transparent pointer-events-none" />
+      <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_20%_25%,rgba(56,189,248,0.10),transparent_55%)] pointer-events-none" />
 
-      {/* Rubrik */}
-      <div className="relative z-10 text-center mb-12">
-        <h2 className="text-4xl font-bold text-sky-500 uppercase">Contact me</h2>
-        <p className="text-gray-600 mt-2">
-          Interested in talking code, collaborations, or just want to say hi?
-        </p>
-      </div>
+      <div className="relative z-10 max-w-6xl mx-auto">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 14 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.4 }}
+          className="mb-12"
+        >
+          <span className="text-xs uppercase tracking-widest text-sky-400">
+            Get in touch
+          </span>
+          <h2 className="text-3xl md:text-4xl font-bold mt-2 mb-3">Contact</h2>
+          <p className="text-slate-400 max-w-lg">
+            Have a project idea or want to collaborate? Send me a message.
+          </p>
+        </motion.div>
 
-      {/* Formulär */}
-      <div className="relative z-10 max-w-2xl mx-auto bg-white border border-sky-200 p-8 rounded-xl shadow-md">
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-            <label htmlFor="name" className="block text-sm font-medium text-sky-500">
-              Name
-            </label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              value={form.name}
-              onChange={handleChange}
-              required
-              className="mt-1 w-full p-3 rounded border border-sky-300 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-sky-400"
-              placeholder="Your name"
-            />
-          </div>
+        <div className="grid md:grid-cols-2 gap-10 max-w-5xl">
+          {/* Form */}
+          <motion.form
+            onSubmit={handleSubmit}
+            initial={{ opacity: 0, y: 14 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4, delay: 0.05 }}
+            className="space-y-4"
+            noValidate
+          >
+            <div>
+              <label htmlFor="name" className="block text-sm font-medium mb-1.5">
+                Name
+              </label>
+              <input
+                id="name"
+                type="text"
+                value={form.name}
+                onChange={(e) => handleChange("name", e.target.value)}
+                className={inputClass("name")}
+                placeholder="Your name"
+                maxLength={100}
+              />
+              {errors.name && (
+                <p className="text-xs text-red-400 mt-1">{errors.name}</p>
+              )}
+            </div>
 
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium text-sky-500">
-              Email
-            </label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={form.email}
-              onChange={handleChange}
-              required
-              className="mt-1 w-full p-3 rounded border border-sky-300 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-sky-400"
-              placeholder="your@email.se"
-            />
-          </div>
+            <div>
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium mb-1.5"
+              >
+                Email
+              </label>
+              <input
+                id="email"
+                type="email"
+                value={form.email}
+                onChange={(e) => handleChange("email", e.target.value)}
+                className={inputClass("email")}
+                placeholder="you@email.com"
+                maxLength={255}
+              />
+              {errors.email && (
+                <p className="text-xs text-red-400 mt-1">{errors.email}</p>
+              )}
+            </div>
 
-          <div>
-            <label htmlFor="message" className="block text-sm font-medium text-sky-500">
-              Message
-            </label>
-            <textarea
-              id="message"
-              name="message"
-              rows="5"
-              value={form.message}
-              onChange={handleChange}
-              required
-              className="mt-1 w-full p-3 rounded border border-sky-300 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-sky-400"
-              placeholder="Write your message here…"
-            />
-          </div>
+            <div>
+              <label
+                htmlFor="message"
+                className="block text-sm font-medium mb-1.5"
+              >
+                Message
+              </label>
+              <textarea
+                id="message"
+                rows={4}
+                value={form.message}
+                onChange={(e) => handleChange("message", e.target.value)}
+                className={`${inputClass("message")} resize-none`}
+                placeholder="Tell me about your project..."
+                maxLength={1000}
+              />
 
-          {/* Centrera knappen */}
-          <div className="flex justify-center">
+              <div className="flex justify-between mt-1">
+                {errors.message ? (
+                  <p className="text-xs text-red-400">{errors.message}</p>
+                ) : (
+                  <span />
+                )}
+                <span className="text-xs text-slate-500">
+                  {form.message.length}/1000
+                </span>
+              </div>
+            </div>
+
             <button
               type="submit"
-              disabled={loading}
-              className="bg-sky-500 text-white font-semibold py-3 px-6 rounded hover:bg-sky-400 transition disabled:opacity-50"
+              disabled={submitting || submitted}
+              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-lg font-medium text-sm transition-colors
+                         bg-sky-500 text-black hover:bg-sky-400
+                         disabled:opacity-60 disabled:hover:bg-sky-500"
             >
-              {loading ? "Sending..." : "Send"}
+              {submitted ? <FiCheck className="w-4 h-4" /> : <FiSend className="w-4 h-4" />}
+              {submitted ? "Sent" : submitting ? "Sending..." : "Send Message"}
             </button>
-          </div>
-        </form>
+          </motion.form>
 
-        {/* Ikoner */}
-        <div className="mt-10 text-center">
-          <p className="text-gray-600">Or reach out to me on:</p>
-          <div className="mt-4 flex justify-center gap-6 text-sky-500 text-2xl">
-            <a
-              href="https://www.linkedin.com/in/simon-gebru-80b21b1b8"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-sky-600 transition"
-            >
-              <FaLinkedin />
-            </a>
-            <a
-              href="https://github.com/SimonGebru"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-sky-600 transition"
-            >
-              <FaGithub />
-            </a>
-          </div>
+          {/* Social cards */}
+          <motion.div
+            initial={{ opacity: 0, y: 14 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4, delay: 0.1 }}
+            className="space-y-3"
+          >
+            <p className="text-sm font-medium text-slate-200 mb-4">
+              Or find me on
+            </p>
+
+            {social.map((item) => (
+              <div
+                key={item.label}
+                className="group border border-slate-800 rounded-xl bg-slate-900/40 p-4 flex items-center justify-between"
+              >
+                <a
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 text-sm text-slate-300 hover:text-white transition-colors"
+                >
+                  <item.icon className="w-4 h-4 text-sky-400" />
+                  <span>
+                    <span className="font-medium text-slate-200">
+                      {item.label}
+                    </span>
+                    <span className="block text-xs text-slate-500">
+                      {item.value}
+                    </span>
+                  </span>
+                </a>
+
+                <button
+                  type="button"
+                  onClick={() => copyToClipboard(item.value, item.label)}
+                  className="p-2 rounded-lg text-slate-500 hover:text-white hover:bg-slate-800/60 transition-colors
+                             opacity-100 md:opacity-0 md:group-hover:opacity-100"
+                  aria-label={`Copy ${item.label}`}
+                >
+                  <FiCopy className="w-4 h-4" />
+                </button>
+              </div>
+            ))}
+
+            <div className="pt-2 text-xs text-slate-500">
+              Prefer a structured message? Use the form — I read everything.
+            </div>
+          </motion.div>
         </div>
       </div>
     </section>
