@@ -5,23 +5,23 @@ import budgifyImage from '../assets/budgify.png';
 
 export const projects = [
   {
-    id: 'froglow',
-    title: 'FroGlow',
-    description: 'A curated beauty product explorer shaped by real user insights',
-    details:
-      'FroGlow is a modern beauty product discovery platform focused on usability and user-driven improvements. Visitors can explore a wide range of self-care items, filter by gender, supplier, and category, and navigate directly to external retailers. The site includes an inspiration page with dynamic hair and skincare tips loaded from Firestore. To refine the experience before going live, we collected survey responses from a dedicated test group, whose feedback has directly informed design and functionality decisions. The frontend is fully responsive for both mobile and desktop, and features a custom-designed logo that also functions as a reset and filter control. The project is still in progress—we are awaiting a few more responses and will update the platform accordingly based on the full set of feedback received.',
-    technologies: [
-      'React',
-      'SASS (SCSS)',
-      'Vite',
-      'React Router',
-      'Firebase Firestore',
-      'Firebase Hosting',
-      'AOS (Animate on Scroll)',
-      'Custom SVG/PNG Logo',
-    ],
-    image: froglowImage,
-  },
+  id: 'froglow',
+  title: 'FroGlow',
+  description: 'A personalized haircare experience powered by user input and smart logic',
+  details:
+    'FroGlow is a modern haircare platform designed to guide users toward the right products based on their unique hair type and needs. At the core of the experience is a dynamic quiz that analyzes factors such as hair type, porosity, scalp condition, and styling preferences to generate tailored product recommendations. The platform combines structured product data with user-driven logic to create a more relevant and personalized browsing experience.\n\nIn addition to recommendations, FroGlow includes an inspiration section with educational content around hair health, routines, and ingredients—built to support users beyond just product selection. The system is built with scalability in mind, using Firebase Firestore to manage product data and user responses, and includes internal tools for maintaining product quality (such as image validation and optimization workflows).\n\nThe project reflects a strong focus on UX, performance, and real-world usability. Rather than being a static product catalog, FroGlow aims to function as an intelligent layer between the user and the overwhelming number of available products—simplifying decision-making and improving confidence in purchases.',
+  technologies: [
+    'React',
+    'Tailwind CSS',
+    'Vite',
+    'React Router',
+    'Firebase Firestore',
+    'Firebase Hosting',
+    'Framer Motion / AOS',
+    'Custom Quiz Logic',
+  ],
+  image: froglowImage,
+},
   {
   id: 'budgify',
   title: 'Budgify',
