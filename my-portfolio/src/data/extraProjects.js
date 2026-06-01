@@ -2,6 +2,7 @@ import directorscutImage from '../assets/filmreview.png';
 import secondscopeImage from '../assets/secondscope.png';
 import trainingtrackerImage from '../assets/trainingtracker.png';
 import focusmodeImage from '../assets/focusmode.png';
+import fplImage from '../assets/fpl.png';
 
 export const extraProjects = [
   {
@@ -37,7 +38,7 @@ export const extraProjects = [
     details:
       'FPL Edge consists of a backend proxy for the official FPL API and a React-based frontend dashboard for data visualization and decision support. The backend fetches bootstrap, fixtures, and live data to calculate metrics such as FormScore, Fixture Difficulty Rating (FDR), and rotation risks. The frontend uses React Context (UserTeamContext and LayoutContext) to import the user’s team, persist data locally, and display key modules such as Captain Picks, Fixture Heatmap, Watchlist, and League standings. The League view allows users to “peek” at other managers’ teams in a modal, including player availability indicators (injured, suspended, doubtful). A dedicated Top-5 Insights panel analyzes leader picks — identifying the common template, captain trends, gaps versus your team, and your unique differentials. The backend includes intelligent fallbacks for FPL’s visibility rules, cycling through current → next → last finished → last played Gameweek via /history/. Continuous Integration via GitHub Actions keeps metrics and cached data updated automatically.',
     liveLink: null, // add public URL when deployed
-    github: null,   // add repo link (monorepo / api / web) when ready
+    github: 'https://github.com/SimonGebru/FPL-EDGE.git',   // add repo link (monorepo / api / web) when ready
     technologies: [
       'React',
       'Vite',
@@ -51,7 +52,7 @@ export const extraProjects = [
       'Proxy / CORS handling',
       'LocalStorage persistence',
     ],
-    image: null, // reference to your screenshot or hero image
+    image: fplImage, // reference to your screenshot or hero image
   }, 
   {
     id: 'secondscope',
