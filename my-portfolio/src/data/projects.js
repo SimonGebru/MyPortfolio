@@ -2,7 +2,7 @@ import jobsearchImage from '../assets/jobsearch.png';
 import froglowImage from '../assets/froglow.png';
 import devpilotImage from '../assets/devpilot.png';
 import budgifyImage from '../assets/budgify.png';
-import neuralWorkspaceImage from '../assets/neuralworkspace.png';
+import neuralWorkspaceImage from '../assets/naturelworkspace.png';
 
 export const projects = [
   {
