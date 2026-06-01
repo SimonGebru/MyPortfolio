@@ -2,25 +2,38 @@ import jobsearchImage from '../assets/jobsearch.png';
 import froglowImage from '../assets/froglow.png';
 import devpilotImage from '../assets/devpilot.png';
 import budgifyImage from '../assets/budgify.png';
+import neuralWorkspaceImage from '../assets/neuralworkspace.png';
 
 export const projects = [
   {
-  id: 'froglow',
-  title: 'FroGlow',
-  description: 'A personalized haircare experience powered by user input and smart logic',
+  id: 'neuralworkspace',
+  title: 'Neural Workspace',
+  description:
+    'A visual knowledge and project management platform where ideas, tasks, technologies and projects are connected through an interactive graph-based workspace.',
   details:
-    'FroGlow is a modern haircare platform designed to guide users toward the right products based on their unique hair type and needs. At the core of the experience is a dynamic quiz that analyzes factors such as hair type, porosity, scalp condition, and styling preferences to generate tailored product recommendations. The platform combines structured product data with user-driven logic to create a more relevant and personalized browsing experience.\n\nIn addition to recommendations, FroGlow includes an inspiration section with educational content around hair health, routines, and ingredients—built to support users beyond just product selection. The system is built with scalability in mind, using Firebase Firestore to manage product data and user responses, and includes internal tools for maintaining product quality (such as image validation and optimization workflows).\n\nThe project reflects a strong focus on UX, performance, and real-world usability. Rather than being a static product catalog, FroGlow aims to function as an intelligent layer between the user and the overwhelming number of available products—simplifying decision-making and improving confidence in purchases.',
+    'Neural Workspace is a full-stack application built around the concept of visual thinking and knowledge mapping. Instead of organizing information in traditional lists or folders, users create interconnected nodes that represent projects, tasks, ideas, notes, technologies and goals. These nodes can then be linked together through custom relationships, creating a dynamic graph that helps users understand how different pieces of information relate to one another. \n\nThe application supports multiple workspaces, allowing users to separate different projects and areas of focus while maintaining their own visual knowledge network inside each workspace. Users can create, edit, move and connect nodes in real time through an interactive graph interface built with Vue Flow. The graph automatically highlights related nodes and connections, making it easier to explore complex projects and ideas. \n\nOne of the primary goals of the project was to build something beyond standard CRUD functionality. The challenge was designing a system where information is not only stored, but also visualized through meaningful relationships. The project includes authentication, workspace management, graph persistence, node relationship management and a fully responsive interface inspired by modern productivity tools. The frontend is built with Vue 3, TypeScript, Pinia and Tailwind CSS, while the backend is powered by Node.js, Express and MongoDB. \n\nMost of my education has been centered around React, but I wanted to broaden my frontend knowledge by exploring Vue on my own. Neural Workspace became the result of that journey. Everything from the architecture and state management to the graph visualization system was built while learning the framework independently, allowing me to apply new concepts immediately in a real project rather than through tutorials alone.',
+  liveLink: '',
+  github: 'https://github.com/SimonGebru/Naturel-Workspace.git',
   technologies: [
-    'React',
+    'Vue 3',
+    'TypeScript',
+    'Pinia',
+    'Vue Router', 
+    'Vue Flow',
     'Tailwind CSS',
-    'Vite',
-    'React Router',
-    'Firebase Firestore',
-    'Firebase Hosting',
-    'Framer Motion / AOS',
-    'Custom Quiz Logic',
+    'Node.js',
+    'Express.js',
+    'MongoDB Atlas',
+    'Mongoose',
+    'JWT Authentication',
+    'REST API',
+    'Full-Stack Development',
+    'Graph Visualization',
+    'Knowledge Management',
+    'Workspace Management',
+    'Interactive Data Relationships',
   ],
-  image: froglowImage,
+  image: neuralWorkspaceImage,
 },
   {
   id: 'budgify',
@@ -78,6 +91,24 @@ export const projects = [
     ],
     image: jobsearchImage,
   },
+  {
+  id: 'froglow',
+  title: 'FroGlow',
+  description: 'A personalized haircare experience powered by user input and smart logic',
+  details:
+    'FroGlow is a modern haircare platform designed to guide users toward the right products based on their unique hair type and needs. At the core of the experience is a dynamic quiz that analyzes factors such as hair type, porosity, scalp condition, and styling preferences to generate tailored product recommendations. The platform combines structured product data with user-driven logic to create a more relevant and personalized browsing experience.\n\nIn addition to recommendations, FroGlow includes an inspiration section with educational content around hair health, routines, and ingredients—built to support users beyond just product selection. The system is built with scalability in mind, using Firebase Firestore to manage product data and user responses, and includes internal tools for maintaining product quality (such as image validation and optimization workflows).\n\nThe project reflects a strong focus on UX, performance, and real-world usability. Rather than being a static product catalog, FroGlow aims to function as an intelligent layer between the user and the overwhelming number of available products—simplifying decision-making and improving confidence in purchases.',
+  technologies: [
+    'React',
+    'Tailwind CSS',
+    'Vite',
+    'React Router',
+    'Firebase Firestore',
+    'Firebase Hosting',
+    'Framer Motion / AOS',
+    'Custom Quiz Logic',
+  ],
+  image: froglowImage,
+},
   {
     id: 'devpilot',
     title: 'DevPilot',
