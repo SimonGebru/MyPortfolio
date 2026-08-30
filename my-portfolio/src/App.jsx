@@ -13,7 +13,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 
 function App() {
-  // AOS (kan tas bort senare när allt är framer-motion)
+  // AOS
   useEffect(() => {
     AOS.init({
       duration: 600,
@@ -21,6 +21,26 @@ function App() {
       offset: 100,
     });
   }, []);
+
+  // Easter egg för nyfikna utvecklare och rekryterare
+  useEffect(() => {
+    console.log(
+      "%c👋 Hey, curious developer!",
+      "font-size: 20px; font-weight: bold; color: #8b5cf6;"
+    );
+
+    console.log(
+      "%cSince you're already inspecting the code, we might be a good match.\nIf you're hiring or want to build something together, let's talk.",
+      "font-size: 13px; line-height: 1.6; color: #a1a1aa;"
+    );
+
+    console.log(
+      "%cLinkedIn: https://www.linkedin.com/in/simon-gebru-80b21b1b8/\nEmail: te.gebru@hotmail.se",
+      "font-size: 13px; line-height: 1.6; color: #8b5cf6; font-weight: bold;"
+    );
+  }, []);
+
+  
 
   // Command palette state globalt (så ⌘K funkar överallt)
   const [cmdOpen, setCmdOpen] = useState(false);
