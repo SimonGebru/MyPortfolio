@@ -1,6 +1,6 @@
 import jobsearchImage from '../assets/jobsearch.png';
 import froglowImage from '../assets/froglow.png';
-import pulseOpsImage from '../assets/PulseOps.png';
+import pulseOpsImage from '../assets/Pulseops.png';
 import budgifyImage from '../assets/budgify.png';
 import neuralWorkspaceImage from '../assets/naturelworkspace.png';
 
