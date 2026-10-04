@@ -2,31 +2,38 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const techStack = [
+  // Frontend
   { name: "HTML", icon: "/icons/html.svg", category: "frontend" },
   { name: "CSS", icon: "/icons/css.svg", category: "frontend" },
   { name: "JavaScript", icon: "/icons/js.svg", category: "frontend" },
   { name: "TypeScript", icon: "/icons/ts.svg", category: "frontend" },
   { name: "React", icon: "/icons/react.svg", category: "frontend" },
+  { name: "Vue 3", icon: "/icons/vuejs-original.svg", category: "frontend" },
   { name: "Redux", icon: "/icons/redux.svg", category: "frontend" },
   { name: "Tailwind", icon: "/icons/tailwind.svg", category: "frontend" },
   { name: "SASS", icon: "/icons/sass.svg", category: "frontend" },
 
+  // Backend & Data
   { name: "Node.js", icon: "/icons/node.svg", category: "backend" },
   { name: "Express", icon: "/icons/express.svg", category: "backend" },
-
-  // (du har DB här som "backend" – helt ok)
+  { name: "Prisma", icon: "/icons/prisma-original.svg", category: "backend" },
   { name: "MongoDB", icon: "/icons/mongodb.svg", category: "backend" },
   { name: "PostgreSQL", icon: "/icons/postgresql.svg", category: "backend" },
+  { name: "Firestore", icon: "/icons/firestore.svg", category: "backend" },
 
+  // Cloud & Tools
   { name: "AWS", icon: "/icons/aws.svg", category: "tools" },
-  { name: "Firestore", icon: "/icons/firestore.svg", category: "tools" },
-  { name: "Vercel", icon: "/icons/vercel.svg", category: "tools" },
-
+  { name: "Docker", icon: "/icons/docker-original.svg", category: "tools" },
+  {
+    name: "GitHub Actions",
+    icon: "/icons/githubactions-original.svg",
+    category: "tools",
+  },
   { name: "Git", icon: "/icons/git.svg", category: "tools" },
   { name: "GitHub", icon: "/icons/github.svg", category: "tools" },
   { name: "Postman", icon: "/icons/postman.svg", category: "tools" },
-  { name: "Figma", icon: "/icons/figma.svg", category: "tools" },
-  { name: "Trello", icon: "/icons/trello.svg", category: "tools" },
+  { name: "Vercel", icon: "/icons/vercel.svg", category: "tools" },
+  { name: "Railway", icon: "/icons/railway-original.svg", category: "tools" },
 ];
 
 const categories = ["all", "frontend", "backend", "tools"];
@@ -40,7 +47,10 @@ const About = () => {
       : techStack.filter((tech) => tech.category === filter);
 
   return (
-    <section id="about" className="relative py-28 px-6 md:px-20 text-slate-200 overflow-hidden">
+    <section
+      id="about"
+      className="relative py-28 px-6 md:px-20 text-slate-200 overflow-hidden"
+    >
       {/* Background overlay (lets ParticleField show through) */}
       <div className="absolute inset-0 z-0 bg-gradient-to-b from-[#020617]/85 via-[#020617]/65 to-transparent pointer-events-none" />
       <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_70%_30%,rgba(56,189,248,0.10),transparent_55%)] pointer-events-none" />
@@ -59,21 +69,33 @@ const About = () => {
           </span>
 
           <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-6">
-            Engineering with clarity.
+            I like knowing why things work.
           </h2>
 
           <div className="space-y-5 text-slate-400 leading-relaxed">
             <p>
-              I’m a frontend-focused developer with a fullstack mindset. I care
-              deeply about structure, maintainability, and interaction quality.
+              I’m a software developer who enjoys moving between frontend,
+              backend and cloud. Most of my work is built with TypeScript, React
+              and Node.js, but I tend to explore whatever the problem in front
+              of me requires.
             </p>
+
             <p>
-              My goal is to build digital experiences that are both performant
-              and intuitive — systems that feel refined, not improvised.
+              I usually have a “why?” somewhere in my head. Getting something to
+              work is good, but understanding why it works, where it can fail
+              and how it could be better is the part I find most interesting.
             </p>
+
             <p>
-              Outside of code, I stay active, follow football, and keep up with
-              emerging technologies and product trends.
+              Before moving into development I spent several years working in
+              service, so communication is something I bring with me. I like
+              understanding what someone actually needs and turning that into
+              something useful.
+            </p>
+
+            <p>
+              Outside of code, there’s usually football, the gym or another
+              project that was supposed to stay small.
             </p>
           </div>
         </motion.div>

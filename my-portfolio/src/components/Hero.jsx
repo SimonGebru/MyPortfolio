@@ -24,21 +24,22 @@ const Hero = () => {
           transition={{ duration: 0.5, ease: "easeOut" }}
         >
           <span className="inline-block mb-6 text-xs uppercase tracking-widest text-sky-400">
-            Fullstack developer · React · UX-focused
+            Software Developer · TypeScript · React · Node.js
           </span>
 
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.05] mb-6">
-            Building structured,
+            Building software
             <br />
-            performant interfaces
+            across frontend,
             <br />
-            with precision.
+            backend and cloud.
           </h1>
 
           <p className="text-lg text-slate-400 max-w-xl leading-relaxed mb-10">
-            I’m Simon — a fullstack-oriented frontend developer who cares about
-            clean architecture, refined interactions, and turning complex ideas
-            into intuitive digital experiences.
+            I’m Simon, a software developer based in Gothenburg, Sweden. I work across
+            frontend, backend and cloud, mostly with TypeScript, React and
+            Node.js. I like understanding the problem behind what I’m building,
+            not just getting the code to work.
           </p>
 
           <div className="flex items-center gap-5">
@@ -47,7 +48,7 @@ const Hero = () => {
               onClick={handleScroll}
               className="inline-flex items-center gap-2 px-6 py-3 bg-sky-500 text-black font-medium rounded-lg hover:bg-sky-400 transition-colors"
             >
-              Explore Projects
+              View my projects
               <FiArrowDown className="w-4 h-4" />
             </a>
 
@@ -62,7 +63,7 @@ const Hero = () => {
             </a>
 
             <a
-              href="https://www.linkedin.com/in/simon-gebru/"
+              href="https://www.linkedin.com/in/simon-gebru-80b21b1b8"
               target="_blank"
               rel="noopener noreferrer"
               className="p-3 rounded-lg border border-slate-700 hover:border-sky-500 hover:text-sky-400 transition-colors"

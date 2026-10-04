@@ -1,17 +1,60 @@
 import jobsearchImage from '../assets/jobsearch.png';
 import froglowImage from '../assets/froglow.png';
-import devpilotImage from '../assets/devpilot.png';
+import pulseOpsImage from '../assets/pulseops.png';
 import budgifyImage from '../assets/budgify.png';
 import neuralWorkspaceImage from '../assets/naturelworkspace.png';
 
 export const projects = [
   {
+  id: 'pulseops',
+  title: 'PulseOps',
+  description:
+  'A full-stack monitoring platform that checks web services, detects outages and processes monitoring jobs through a distributed AWS setup.',
+
+  details:
+  'PulseOps started as a way for me to go deeper into backend development and AWS, but it quickly grew into a much larger project. Users can monitor external endpoints and follow uptime, response times and incidents from a dashboard. Instead of opening an incident after one failed request, the system tracks failures and recoveries over time and automatically opens or resolves incidents when certain conditions are met. \n\nOne of the parts I wanted to understand better was asynchronous processing. Monitoring jobs are sent through Amazon SQS and handled by a separate worker service, keeping the API and monitoring workload separate. I also added retries, a dead-letter queue and idempotent processing so the same job is not stored twice if a message is delivered more than once. \n\nSecurity became a bigger part of the project than I first expected. Since users can submit URLs that the backend later requests, I added SSRF protection, safe redirect handling, rate limiting, input validation and organization-based authorization. The API and worker are containerized with Docker and deployed to AWS ECS with Fargate, while PostgreSQL runs on RDS and logs are collected in CloudWatch. PulseOps became the project where I really started moving from simply building an application to thinking about how it should run, fail and recover in production.',
+  liveLink: '',
+  github: 'https://github.com/SimonGebru/Pulseops.git',
+  technologies: [
+    'React',
+    'TypeScript',
+    'Vite',
+    'Node.js',
+    'Express.js',
+    'PostgreSQL',
+    'Prisma',
+    'Docker',
+    'Amazon ECS',
+    'AWS Fargate',
+    'Amazon RDS',
+    'Amazon SQS',
+    'Amazon ECR',
+    'AWS Secrets Manager',
+    'Amazon CloudWatch',
+    'Application Load Balancer',
+    'IAM',
+    'REST API',
+    'JWT Authentication',
+    'Background Workers',
+    'Asynchronous Processing',
+    'Incident Management',
+    'Health Monitoring',
+    'SSRF Protection',
+    'Rate Limiting',
+    'Full-Stack Development',
+    'Cloud Deployment',
+  ],
+  image: pulseOpsImage,
+},
+
+{
   id: 'neuralworkspace',
   title: 'Neural Workspace',
   description:
-    'A visual knowledge and project management platform where ideas, tasks, technologies and projects are connected through an interactive graph-based workspace. Built with Vue 3',
+  'A full-stack visual workspace where projects, ideas, tasks and technologies can be connected and explored through an interactive graph.',
+
   details:
-    'Neural Workspace is a full-stack application built around the concept of visual thinking and knowledge mapping. Instead of organizing information in traditional lists or folders, users create interconnected nodes that represent projects, tasks, ideas, notes, technologies and goals. These nodes can then be linked together through custom relationships, creating a dynamic graph that helps users understand how different pieces of information relate to one another. \n\nThe application supports multiple workspaces, allowing users to separate different projects and areas of focus while maintaining their own visual knowledge network inside each workspace. Users can create, edit, move and connect nodes in real time through an interactive graph interface built with Vue Flow. The graph automatically highlights related nodes and connections, making it easier to explore complex projects and ideas. \n\nOne of the primary goals of the project was to build something beyond standard CRUD functionality. The challenge was designing a system where information is not only stored, but also visualized through meaningful relationships. The project includes authentication, workspace management, graph persistence, node relationship management and a fully responsive interface inspired by modern productivity tools. The frontend is built with Vue 3, TypeScript, Pinia and Tailwind CSS, while the backend is powered by Node.js, Express and MongoDB. \n\nMost of my education has been centered around React, but I wanted to broaden my frontend knowledge by exploring Vue on my own. Neural Workspace became the result of that journey. Everything from the architecture and state management to the graph visualization system was built while learning the framework independently, allowing me to apply new concepts immediately in a real project rather than through tutorials alone.',
+  'Neural Workspace is a project I built around the idea that not everything fits neatly into lists and folders. Instead, users create nodes for things like projects, tasks, ideas, notes and technologies, then connect them through relationships to build a visual map of how everything fits together. \n\nUsers can create multiple workspaces and add, move, edit and connect nodes through an interactive graph built with Vue Flow. The application also includes authentication, persistent workspaces and relationships, and backend APIs built with Node.js, Express and MongoDB. \n\nMost of my frontend experience before this project was in React, so I deliberately chose Vue 3 and Pinia because I wanted to learn a different frontend ecosystem by actually building something with it. The interesting part for me was not just learning the syntax, but figuring out state management, graph interactions and how to persist relationships between nodes. Neural Workspace became a good example of how I prefer to learn new technology: pick something I do not already know and build far enough with it that I have to understand how it actually works.',
   liveLink: '',
   github: 'https://github.com/SimonGebru/Naturel-Workspace.git',
   technologies: [
@@ -39,9 +82,10 @@ export const projects = [
   id: 'budgify',
   title: 'Budgify',
   description:
-    'A full-stack budgeting app for couples and individuals, built to support both shared household planning and personal money tracking.',
-  details:
-    'Budgify is my final thesis project and a full-stack web app designed to make budgeting feel simpler and more flexible. The app allows users to either manage their personal finances on their own or connect with a partner through a shared household. Users can create personal budgets, track private transactions, and, when connected to a household, split monthly expenses fairly using different distribution models based on household income and budgeting preferences. \n\nOne of the main focuses of the project was the backend business logic rather than just CRUD operations. I designed the app so that users can calculate and compare shared costs based on multiple split modes, while still keeping personal budgeting separate and private. The project was also deployed as a real production-ready full-stack application using Vercel for the frontend, Railway for the backend, and MongoDB Atlas for the database, with custom domain configuration and environment-based API setup.',
+  'A full-stack budgeting app for couples and individuals, focused on flexible expense splitting and real household budgeting.',
+
+details:
+  'Budgify started as my final thesis project, but it became something more practical than that. The app lets users manage their own budget or connect with a partner through a shared household, where monthly costs can be split using different models depending on income and how the household wants to divide expenses. \n\nA big part of the project was the backend logic behind those calculations. I built several split modes, including equal split, income-based split and a model where the higher earner pays a larger share. I also had to make sure private budgeting stayed separate from shared household data and that calculations remained consistent when values changed. \n\nThe app is built with React, Node.js, Express and MongoDB, with authentication and protected APIs. It is deployed with Vercel and Railway and is something my partner and I have actually used for our own monthly budgeting. That made the project useful in a different way, because the decisions were not only technical. I also had to think about whether the logic made sense for someone actually using it every month.',
   liveLink: 'https://budgify.se',
   github: 'https://github.com/SimonGebru/BudgetBuddy.git',
   technologies: [
@@ -64,7 +108,27 @@ export const projects = [
   ],
   image: budgifyImage,
 },
-  
+  {
+  id: 'froglow',
+  title: 'FroGlow',
+  description:
+  'A personalized haircare platform that helps users discover products based on their hair type, needs and preferences.',
+
+details:
+  'FroGlow is a haircare platform focused on making product discovery more relevant and easier to navigate. Users can answer questions about their hair and preferences and receive more tailored recommendations instead of browsing a large product catalogue without guidance. \n\nThe project has a strong focus on frontend experience, structured product data and personalization. I have worked with React, Firebase, routing, responsive design and user flows, with a lot of attention on making the experience feel clear and useful rather than overwhelming. \n\nBecause parts of the project are covered by confidentiality, I keep the technical details limited, but it has given me practical experience working on a product where usability, data and business needs all have to work together.',
+  liveLink: 'https://froglow.se',
+  technologies: [
+    'React',
+    'Tailwind CSS',
+    'Vite',
+    'React Router',
+    'Firebase Firestore',
+    'Firebase Hosting',
+    'Framer Motion / AOS',
+    'Custom Quiz Logic',
+  ],
+  image: froglowImage,
+},
   {
     id: 'jobtracker',
     title: 'JobTracker',
@@ -91,45 +155,6 @@ export const projects = [
     ],
     image: jobsearchImage,
   },
-  {
-  id: 'froglow',
-  title: 'FroGlow',
-  description: 'A personalized haircare experience powered by user input and smart logic',
-  details:
-    'FroGlow is a modern haircare platform designed to guide users toward the right products based on their unique hair type and needs. At the core of the experience is a dynamic quiz that analyzes factors such as hair type, porosity, scalp condition, and styling preferences to generate tailored product recommendations. The platform combines structured product data with user-driven logic to create a more relevant and personalized browsing experience.\n\nIn addition to recommendations, FroGlow includes an inspiration section with educational content around hair health, routines, and ingredients—built to support users beyond just product selection. The system is built with scalability in mind, using Firebase Firestore to manage product data and user responses, and includes internal tools for maintaining product quality (such as image validation and optimization workflows).\n\nThe project reflects a strong focus on UX, performance, and real-world usability. Rather than being a static product catalog, FroGlow aims to function as an intelligent layer between the user and the overwhelming number of available products—simplifying decision-making and improving confidence in purchases.',
-  technologies: [
-    'React',
-    'Tailwind CSS',
-    'Vite',
-    'React Router',
-    'Firebase Firestore',
-    'Firebase Hosting',
-    'Framer Motion / AOS',
-    'Custom Quiz Logic',
-  ],
-  image: froglowImage,
-},
-  {
-    id: 'devpilot',
-    title: 'DevPilot',
-    description: 'An interactive VS Code extension for shortcut mastery and code snippet training',
-    details:
-      'DevPilot is an ongoing VS Code extension project designed to help developers improve their workflow through shortcut training and keyboard kata sessions. Users are presented with random keyboard challenges (e.g. "Comment this line", "Copy a row") and can track their progress over time. The extension also includes a dedicated typing interface where users must reproduce real-world code snippets (from JavaScript, React, Git and more) with precision. A built-in “auto-train” mode delivers new challenges every 10 minutes to promote spaced repetition. \n\nThe project is still in development — we are currently implementing time tracking, feedback on failed attempts, and a future level-up system. The goal is to turn DevPilot into a smart, gamified productivity trainer directly inside the code editor.',
-      github: 'https://github.com/SimonGebru/dev-pilot.git', 
-      technologies: [
-        'VS Code Extension API',
-        'TypeScript',
-        'Node.js',
-        'Webview API (HTML/CSS + postMessage)',
-        'VS Code Status Bar Items',
-        'Command Palette Integration',
-        'Gamification Design Patterns',
-        'Modular Code Architecture',
-        'Live Code Matching',
-        'Keyboard Shortcut Detection',
-        'Timed Interval Challenges',
-        'Custom Typing Trainer Logic',
-      ],
-    image: devpilotImage,
-  },
+  
+  
   ];
