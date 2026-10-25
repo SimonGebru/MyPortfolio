@@ -6,9 +6,13 @@ import { TypeAnimation } from "react-type-animation";
 const navItems = [
   { label: "About", href: "#about" },
   { label: "Projects", href: "#projects" },
+  { label: "Open Source", href: "#open-source" },
+  { label: "Experience", href: "#experience" },
   { label: "Education", href: "#education" },
   { label: "Contact", href: "#contact" },
 ];
+
+const NAVBAR_OFFSET = 80;
 
 const Navbar = ({ onCommandPalette }) => {
   const [scrolled, setScrolled] = useState(false);
@@ -19,29 +23,41 @@ const Navbar = ({ onCommandPalette }) => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 12);
 
-      const sections = navItems.map((i) => i.href.slice(1));
+      const sections = navItems.map((item) => item.href.slice(1));
+
       for (let i = sections.length - 1; i >= 0; i--) {
         const el = document.getElementById(sections[i]);
+
         if (!el) continue;
-        if (el.getBoundingClientRect().top <= 140) {
+
+        if (el.getBoundingClientRect().top <= NAVBAR_OFFSET + 60) {
           setActiveSection(sections[i]);
           return;
         }
       }
+
       setActiveSection("");
     };
 
     handleScroll();
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+
+    window.addEventListener("scroll", handleScroll, {
+      passive: true,
+    });
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
   useEffect(() => {
     if (!mobileOpen) return;
-    const prev = document.body.style.overflow;
+
+    const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
+
     return () => {
-      document.body.style.overflow = prev;
+      document.body.style.overflow = previousOverflow;
     };
   }, [mobileOpen]);
 
@@ -49,12 +65,25 @@ const Navbar = ({ onCommandPalette }) => {
     setMobileOpen(false);
 
     if (href === "#") {
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
       return;
     }
 
-    const el = document.querySelector(href);
-    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    const section = document.querySelector(href);
+
+    if (!section) return;
+
+    const sectionTop = section.getBoundingClientRect().top + window.scrollY;
+
+    window.scrollTo({
+      top: sectionTop - NAVBAR_OFFSET,
+      behavior: "smooth",
+    });
+
+    setActiveSection(href.slice(1));
   }, []);
 
   return (
@@ -72,43 +101,53 @@ const Navbar = ({ onCommandPalette }) => {
       <div className="max-w-6xl mx-auto px-6 md:px-20 h-16 flex items-center justify-between">
         {/* Brand */}
         <button
+          type="button"
           onClick={() => handleNavClick("#")}
           className="text-left focus:outline-none"
           aria-label="Go to top"
         >
           <TypeAnimation
-            sequence={["simon.gebru", 1200, "frontend.dev", 1200]}
+            sequence={["simon.gebru", 1200, "software.dev", 1200]}
             speed={55}
             wrapper="span"
             repeat={Infinity}
             cursor={true}
             className="text-slate-200 font-semibold tracking-tight"
           />
+
           <span className="ml-2 text-sky-400 font-mono text-xs hidden sm:inline">
             {"</>"}
           </span>
         </button>
 
-        {/* Desktop */}
+        {/* Desktop navigation */}
         <div className="hidden md:flex items-center gap-1">
           {navItems.map((item) => {
             const isActive = activeSection === item.href.slice(1);
+
             return (
               <button
                 key={item.href}
+                type="button"
                 onClick={() => handleNavClick(item.href)}
+                aria-current={isActive ? "location" : undefined}
                 className={[
-                  "relative px-4 py-2 text-sm font-medium rounded-lg transition-colors",
+                  "relative px-3 lg:px-4 py-2 text-sm font-medium rounded-lg transition-colors",
                   "focus:outline-none focus:ring-1 focus:ring-sky-500",
                   isActive ? "text-white" : "text-slate-400 hover:text-white",
                 ].join(" ")}
               >
                 {item.label}
+
                 {isActive && (
                   <motion.div
                     layoutId="nav-indicator"
                     className="absolute bottom-1 left-3 right-3 h-px bg-sky-400"
-                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                    transition={{
+                      type: "spring",
+                      stiffness: 380,
+                      damping: 30,
+                    }}
                   />
                 )}
               </button>
@@ -118,6 +157,7 @@ const Navbar = ({ onCommandPalette }) => {
           {/* Command palette button */}
           {onCommandPalette && (
             <button
+              type="button"
               onClick={onCommandPalette}
               className="ml-2 flex items-center gap-1.5 px-3 py-1.5 text-xs font-mono text-slate-300 bg-slate-900/60 rounded-lg border border-slate-800 hover:text-white hover:border-sky-500/40 transition-colors focus:outline-none focus:ring-1 focus:ring-sky-500"
               aria-label="Open command palette"
@@ -128,33 +168,44 @@ const Navbar = ({ onCommandPalette }) => {
           )}
         </div>
 
-        {/* Mobile */}
+        {/* Mobile menu toggle */}
         <button
+          type="button"
           className="md:hidden p-2 rounded-lg text-slate-200 focus:outline-none focus:ring-1 focus:ring-sky-500"
-          onClick={() => setMobileOpen((p) => !p)}
-          aria-label="Toggle menu"
+          onClick={() => setMobileOpen((previous) => !previous)}
+          aria-label={mobileOpen ? "Close menu" : "Open menu"}
           aria-expanded={mobileOpen}
+          aria-controls="mobile-navigation"
         >
-          {mobileOpen ? <FiX className="w-5 h-5" /> : <FiMenu className="w-5 h-5" />}
+          {mobileOpen ? (
+            <FiX className="w-5 h-5" />
+          ) : (
+            <FiMenu className="w-5 h-5" />
+          )}
         </button>
       </div>
 
+      {/* Mobile navigation */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
+            id="mobile-navigation"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.25 }}
             className="md:hidden bg-[#020617]/95 backdrop-blur border-b border-slate-800 overflow-hidden"
           >
-            <div className="max-w-6xl mx-auto px-6 md:px-20 py-4 flex flex-col gap-1">
+            <div className="max-w-6xl mx-auto px-6 py-4 flex flex-col gap-1">
               {navItems.map((item) => {
                 const isActive = activeSection === item.href.slice(1);
+
                 return (
                   <button
                     key={item.href}
+                    type="button"
                     onClick={() => handleNavClick(item.href)}
+                    aria-current={isActive ? "location" : undefined}
                     className={[
                       "text-left px-4 py-3 rounded-lg text-sm font-medium transition-colors",
                       "focus:outline-none focus:ring-1 focus:ring-sky-500",
@@ -170,6 +221,7 @@ const Navbar = ({ onCommandPalette }) => {
 
               {onCommandPalette && (
                 <button
+                  type="button"
                   onClick={() => {
                     setMobileOpen(false);
                     onCommandPalette();
