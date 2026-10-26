@@ -30,17 +30,23 @@ const APPROVED_CONTRIBUTIONS = [
     summary:
       "Optimized the station stops page by reducing unnecessary API requests, keeping timeline data synchronized, and adding regression tests.",
 
-    paragraphs: [
-      "I contributed to Open Bus Map Search, an open-source project focused on public transportation data, by identifying and resolving a performance issue in the station stops page.",
+    
+paragraphs: [
+  "I contributed to Open Bus Map Search, an open-source project focused on public transportation data, by identifying and resolving a performance issue in the station stops page.",
 
-      "The application was making unnecessary API requests whenever users changed the selected time, including requests for intermediate values while typing. I implemented a 500ms debounce to ensure that data is fetched only after the user pauses their input, reducing redundant network requests while keeping the interface responsive.",
+  "The application was making unnecessary API requests whenever users changed the selected time, including requests for intermediate values while typing. I implemented a **500ms debounce** to ensure that data is fetched only after the user pauses their input, reducing redundant network requests while keeping the interface responsive.",
 
-      "I also updated the data-fetching logic to keep the timeline visualization synchronized with the selected request time.",
+  "I also updated the data-fetching logic to keep the timeline visualization synchronized with the selected request time.",
 
-      "To ensure the solution remained reliable, I added two regression tests using Vitest and React Testing Library, covering both stop data and scheduled versus actual arrival times. I verified the improvement through Chrome DevTools and successfully ran the project's lint checks, unit tests, and production build.",
+  "To ensure the solution remained reliable, I added two regression tests using **Vitest and React Testing Library**, covering both stop data and scheduled versus actual stop times. I verified the improvement through Chrome DevTools and successfully ran the project's lint checks, unit tests, and production build.",
+],
 
-      "The contribution was submitted through Pull Request #1920 and received approval from a project maintainer, giving me practical experience working with an established codebase, following contribution guidelines, and participating in a collaborative code review process.",
-    ],
+reviewText:
+  "The contribution was submitted through **Pull Request #1920**, received approval from a project maintainer, and passed the project's automated checks. This gave me hands-on experience contributing to an established open-source codebase, following contribution guidelines, writing regression tests, and collaborating with maintainers through code review.",
+
+mergedText:
+  "The fix was approved by a project maintainer and successfully merged into the project's main branch through **Pull Request #1920**. This experience strengthened my ability to contribute to an established codebase, write regression tests, and collaborate with other developers through code review.",
+
 
     highlights: [
       {
@@ -233,16 +239,44 @@ const ContributionCard = ({ contribution, index }) => {
                   What I worked on
                 </h4>
 
-                <div className="space-y-5 max-w-3xl">
-                  {contribution.paragraphs.map((paragraph, i) => (
-                    <p
-                      key={i}
-                      className="text-sm sm:text-base text-slate-400 leading-7"
-                    >
-                      {paragraph}
-                    </p>
-                  ))}
-                </div>
+                
+<div className="space-y-5 max-w-3xl">
+  {[
+    ...contribution.paragraphs,
+    contribution.status.label === "Merged"
+      ? contribution.mergedText
+      : contribution.reviewText,
+  ].map((paragraph, i) => (
+    <p
+      key={i}
+      className="text-sm sm:text-base text-slate-400 leading-7"
+    >
+      {paragraph.split(/(\*\*.*?\*\*)/g).map((part, j) =>
+        part.startsWith("**") && part.endsWith("**") ? (
+          <strong
+            key={j}
+            className="font-semibold text-slate-200"
+          >
+            {part.slice(2, -2)}
+          </strong>
+        ) : (
+          <span key={j}>{part}</span>
+        )
+      )}
+    </p>
+  ))}
+
+  <a
+    href={contribution.url}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="inline-flex items-center gap-2 text-sm font-medium text-sky-400 hover:text-sky-300 transition-colors"
+  >
+    View Pull Request #{contribution.number}
+    <FiExternalLink className="w-4 h-4" />
+  </a>
+</div>
+
 
                 <div className="flex items-center gap-2 mt-8 text-sm text-slate-300">
                   <FiCheck className="w-4 h-4 text-sky-400" />
