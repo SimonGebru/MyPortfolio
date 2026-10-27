@@ -141,6 +141,7 @@ const getPullRequestStatus = (pullRequest) => {
   };
 };
 
+
 const ContributionCard = ({ contribution, index }) => {
   const [expanded, setExpanded] = useState(false);
   const StatusIcon = contribution.status.icon;
@@ -246,7 +247,7 @@ const ContributionCard = ({ contribution, index }) => {
           })}
         </div>
 
-        {/* Expand/collapse */}
+        {/* Expand/collapse button */}
         <button
           type="button"
           onClick={() => setExpanded((previous) => !previous)}
@@ -256,7 +257,9 @@ const ContributionCard = ({ contribution, index }) => {
         >
           <FiCode className="w-4 h-4" />
 
-          {expanded ? "Hide contribution details" : "Read full contribution"}
+          {expanded
+            ? "Hide contribution details"
+            : "Read full contribution"}
 
           <FiChevronDown
             className={`w-4 h-4 transition-transform duration-300 ${
@@ -274,7 +277,10 @@ const ContributionCard = ({ contribution, index }) => {
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: "auto", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.3, ease: "easeInOut" }}
+              transition={{
+                duration: 0.3,
+                ease: "easeInOut",
+              }}
               className="overflow-hidden"
             >
               <div className="pt-8 mt-8 border-t border-slate-700/70">
@@ -286,49 +292,53 @@ const ContributionCard = ({ contribution, index }) => {
                   What I worked on
                 </h4>
 
-                
-<div className="space-y-5 max-w-3xl">
-  {[
-    ...contribution.paragraphs,
-    contribution.status.label === "Merged"
-      ? contribution.mergedText
-      : contribution.reviewText,
-  ].map((paragraph, i) => (
-    <p
-      key={i}
-      className="text-sm sm:text-base text-slate-400 leading-7"
-    >
-      {paragraph.split(/(\*\*.*?\*\*)/g).map((part, j) =>
-        part.startsWith("**") && part.endsWith("**") ? (
-          <strong
-            key={j}
-            className="font-semibold text-slate-200"
-          >
-            {part.slice(2, -2)}
-          </strong>
-        ) : (
-          <span key={j}>{part}</span>
-        )
-      )}
-    </p>
-  ))}
+                {/* Contribution description */}
+                <div className="space-y-5 max-w-3xl">
+                  {[
+                    ...contribution.paragraphs,
+                    contribution.status.label === "Merged"
+                      ? contribution.mergedText
+                      : contribution.reviewText,
+                  ]
+                    .filter(Boolean)
+                    .map((paragraph, i) => (
+                      <p
+                        key={i}
+                        className="text-sm sm:text-base text-slate-400 leading-7"
+                      >
+                        {paragraph
+                          .split(/(\*\*.*?\*\*)/g)
+                          .map((part, j) =>
+                            part.startsWith("**") &&
+                            part.endsWith("**") ? (
+                              <strong
+                                key={j}
+                                className="font-semibold text-slate-200"
+                              >
+                                {part.slice(2, -2)}
+                              </strong>
+                            ) : (
+                              <span key={j}>{part}</span>
+                            )
+                          )}
+                      </p>
+                    ))}
 
-  <a
-    href={contribution.url}
-    target="_blank"
-    rel="noopener noreferrer"
-    className="inline-flex items-center gap-2 text-sm font-medium text-sky-400 hover:text-sky-300 transition-colors"
-  >
-    View Pull Request #{contribution.number}
-    <FiExternalLink className="w-4 h-4" />
-  </a>
-</div>
-
+                  <a
+                    href={contribution.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 text-sm font-medium text-sky-400 hover:text-sky-300 transition-colors"
+                  >
+                    View Pull Request #{contribution.number}
+                    <FiExternalLink className="w-4 h-4" />
+                  </a>
+                </div>
 
                 <div className="flex items-center gap-2 mt-8 text-sm text-slate-300">
                   <FiCheck className="w-4 h-4 text-sky-400" />
                   <span>
-                    Tested, reviewed, and submitted through GitHub.
+                    Tested and submitted through GitHub.
                   </span>
                 </div>
               </div>
@@ -337,8 +347,9 @@ const ContributionCard = ({ contribution, index }) => {
         </AnimatePresence>
 
         {/* Footer */}
-        <div className="flex flex-wrap items-center justify-between gap-4 pt-7 mt-9 border-t border-slate-700/70">
-          <div className="flex flex-wrap items-center gap-3 text-sm text-slate-500">
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-5 pt-7 mt-9 border-t border-slate-700/70">
+          {/* Date and PR title */}
+          <div className="flex flex-wrap items-center gap-3 text-sm text-slate-500 min-w-0">
             <span>
               {new Date(contribution.createdAt).toLocaleDateString(
                 "en-US",
@@ -356,20 +367,36 @@ const ContributionCard = ({ contribution, index }) => {
             </span>
           </div>
 
-          <a
-            href={contribution.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-5 py-2.5 bg-sky-500 text-black text-sm font-medium rounded-lg hover:bg-sky-400 transition-colors"
-          >
-            View Pull Request
-            <FiExternalLink className="w-4 h-4" />
-          </a>
+          {/* GitHub links */}
+          <div className="flex flex-wrap items-center gap-4 shrink-0">
+            <a
+              href={contribution.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-sky-500 text-black text-sm font-medium rounded-lg hover:bg-sky-400 transition-colors"
+            >
+              View Pull Request
+              <FiExternalLink className="w-4 h-4" />
+            </a>
+
+            {contribution.issueUrl && (
+              <a
+                href={contribution.issueUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-sm font-medium text-slate-400 hover:text-sky-400 transition-colors"
+              >
+                View Issue
+                <FiExternalLink className="w-4 h-4" />
+              </a>
+            )}
+          </div>
         </div>
       </div>
     </motion.article>
   );
 };
+
 
 const OpenSourceContributions = () => {
   const [contributions, setContributions] = useState([]);
