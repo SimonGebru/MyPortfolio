@@ -17,6 +17,7 @@ import {
 const GITHUB_USERNAME = "SimonGebru";
 
 // Only contributions approved by you appear in the portfolio.
+
 const APPROVED_CONTRIBUTIONS = [
   {
     owner: "hasadna",
@@ -30,23 +31,21 @@ const APPROVED_CONTRIBUTIONS = [
     summary:
       "Optimized the station stops page by reducing unnecessary API requests, keeping timeline data synchronized, and adding regression tests.",
 
-    
-paragraphs: [
-  "I contributed to Open Bus Map Search, an open-source project focused on public transportation data, by identifying and resolving a performance issue in the station stops page.",
+    paragraphs: [
+      "I contributed to Open Bus Map Search, an open-source project focused on public transportation data, by identifying and resolving a performance issue in the station stops page.",
 
-  "The application was making unnecessary API requests whenever users changed the selected time, including requests for intermediate values while typing. I implemented a **500ms debounce** to ensure that data is fetched only after the user pauses their input, reducing redundant network requests while keeping the interface responsive.",
+      "The application was making unnecessary API requests whenever users changed the selected time, including requests for intermediate values while typing. I implemented a **500ms debounce** to ensure that data is fetched only after the user pauses their input, reducing redundant network requests while keeping the interface responsive.",
 
-  "I also updated the data-fetching logic to keep the timeline visualization synchronized with the selected request time.",
+      "I also updated the data-fetching logic to keep the timeline visualization synchronized with the selected request time.",
 
-  "To ensure the solution remained reliable, I added two regression tests using **Vitest and React Testing Library**, covering both stop data and scheduled versus actual stop times. I verified the improvement through Chrome DevTools and successfully ran the project's lint checks, unit tests, and production build.",
-],
+      "To ensure the solution remained reliable, I added two regression tests using **Vitest and React Testing Library**, covering both stop data and scheduled versus actual stop times. I verified the improvement through Chrome DevTools and successfully ran the project's lint checks, unit tests, and production build.",
+    ],
 
-reviewText:
-  "The contribution was submitted through **Pull Request #1920**, received approval from a project maintainer, and passed the project's automated checks. This gave me hands-on experience contributing to an established open-source codebase, following contribution guidelines, writing regression tests, and collaborating with maintainers through code review.",
+    reviewText:
+      "The contribution was submitted through **Pull Request #1920**, received approval from a project maintainer, and passed the project's automated checks. This gave me hands-on experience contributing to an established open-source codebase, following contribution guidelines, writing regression tests, and collaborating with maintainers through code review.",
 
-mergedText:
-  "The fix was approved by a project maintainer and successfully merged into the project's main branch through **Pull Request #1920**. This experience strengthened my ability to contribute to an established codebase, write regression tests, and collaborate with other developers through code review.",
-
+    mergedText:
+      "The fix was approved by a project maintainer and successfully merged into the project's main branch through **Pull Request #1920**. This experience strengthened my ability to contribute to an established codebase, write regression tests, and collaborate with other developers through code review.",
 
     highlights: [
       {
@@ -66,7 +65,55 @@ mergedText:
       },
     ],
   },
+
+  {
+    owner: "neomjs",
+    repo: "neo",
+    prNumber: 20157,
+
+    projectName: "Neo.mjs",
+    category: "Unit Testing",
+    tags: ["JavaScript", "Playwright", "Unit Testing"],
+
+    summary:
+      "Added 13 Playwright unit tests for Neo.mjs's currency field, covering numeric parsing, rounding, formatting, edge cases, and default configuration. Established regression coverage for existing behavior without modifying production code.",
+
+    paragraphs: [
+      "I contributed to Neo.mjs, an open-source JavaScript framework, by adding 13 Playwright unit tests for its currency field.",
+
+      "The tests cover numeric parsing, decimal rounding, currency formatting, edge cases, and default configuration. The goal was to establish reliable regression coverage for existing behavior without changing the production implementation.",
+
+      "This contribution gave me practical experience understanding an established framework's codebase, working with its existing testing infrastructure, and writing tests that help prevent regressions.",
+    ],
+
+    reviewText:
+      "The contribution was submitted through **Pull Request #20157**, linked to **Issue #19129**, and is awaiting review. It focuses entirely on test coverage rather than introducing new production functionality.",
+
+    mergedText:
+      "The contribution was successfully merged through **Pull Request #20157**, addressing **Issue #19129**. It adds regression coverage for the currency field without changing production code.",
+
+    issueUrl: "https://github.com/neomjs/neo/issues/19129",
+
+    highlights: [
+      {
+        label: "Test Coverage",
+        value: "13 unit tests",
+        icon: FiCheckCircle,
+      },
+      {
+        label: "Framework",
+        value: "Playwright",
+        icon: FiCode,
+      },
+      {
+        label: "Contribution",
+        value: "Regression tests",
+        icon: FiGitPullRequest,
+      },
+    ],
+  },
 ];
+
 
 const getPullRequestStatus = (pullRequest) => {
   if (pullRequest.merged_at) {
@@ -460,7 +507,7 @@ const OpenSourceContributions = () => {
 
         {/* Contribution cards */}
         {!loading && !error && (
-          <div className="grid grid-cols-1 gap-6 max-w-4xl">
+          <div className="grid grid-cols-1 gap-6 max-w-5xl">
             {contributions.map((contribution, index) => (
               <ContributionCard
                 key={contribution.id}
