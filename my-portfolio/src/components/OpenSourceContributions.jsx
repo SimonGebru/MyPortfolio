@@ -246,6 +246,45 @@ const ContributionCard = ({ contribution, index }) => {
             );
           })}
         </div>
+          
+          
+{/* Official Neo.mjs Contributor Badge */}
+{contribution.owner === "neomjs" &&
+  contribution.repo === "neo" && (
+    <div className="mb-8 p-5 sm:p-6 rounded-xl border border-sky-500/20 bg-sky-500/[0.04]">
+      <div className="flex flex-col sm:flex-row sm:items-center gap-5">
+        <a
+          href="https://neomjs.com/badges/simongebru-172205608/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="shrink-0"
+          aria-label="View official Neo.mjs contributor badge"
+        >
+          <img
+            src="https://neomjs.com/badges/simongebru-172205608/card.svg"
+            alt="Neo.mjs official contributor badge"
+            loading="lazy"
+            className="w-full max-w-[240px] h-auto rounded-lg"
+          />
+        </a>
+
+        <div>
+          <span className="text-xs uppercase tracking-widest text-sky-400">
+            Official Contributor Recognition
+          </span>
+
+          <h4 className="text-lg font-semibold text-slate-200 mt-2 mb-2">
+            Neo.mjs Contributor
+          </h4>
+
+          <p className="text-sm text-slate-400 leading-relaxed">
+            Recognized by the Neo.mjs project for a successfully
+            merged open-source contribution.
+          </p>
+        </div>
+      </div>
+    </div>
+  )}
 
         {/* Expand/collapse button */}
         <button
