@@ -19,6 +19,57 @@ const GITHUB_USERNAME = "SimonGebru";
 // Only contributions approved by you appear in the portfolio.
 
 const APPROVED_CONTRIBUTIONS = [
+  
+{
+  owner: "primer",
+  repo: "react",
+  prNumber: 8833,
+
+  projectName: "Primer React",
+  category: "CSS Optimization",
+  tags: ["React", "CSS", "TypeScript", "Playwright"],
+
+  summary:
+    "Improved button styling by removing unnecessary :has() selectors while preserving keybinding hint spacing. Added a Playwright regression test and verified the changes across multiple browsers.",
+
+  paragraphs: [
+    "I contributed to Primer React, GitHub's open-source React component library, by working on a performance-related issue involving CSS selectors in the Button component.",
+
+    "The component used **:has() selectors** to adjust button padding when keyboard shortcut hints were present. These selectors required the browser to check descendant elements, creating unnecessary style recalculation work in a widely used component.",
+
+    "After discussing possible approaches with a project maintainer, I implemented a **CSS-only solution** that preserves the default button padding and uses a calculated negative margin to position the final keyboard shortcut hint. This avoided introducing new React props, additional renders, or server-side rendering issues.",
+
+    "I also added a **Playwright regression test** to verify that only the final hint in a keyboard shortcut sequence receives the adjusted margin. I verified the spacing across three button sizes, checked the visual appearance in Chrome, Firefox, and Safari, and successfully ran **235 existing Playwright tests** in the project's Docker-based testing environment.",
+  ],
+
+  reviewText:
+    "The contribution was submitted through **Pull Request #8833**, addressing **Issue #8724**. The implementation follows a CSS-based approach discussed with a project maintainer and includes automated regression coverage. The pull request is currently awaiting review.",
+
+  mergedText:
+    "The contribution was successfully merged through **Pull Request #8833**, addressing **Issue #8724**. It removes unnecessary CSS selectors, preserves keyboard shortcut styling, and introduces regression coverage for the updated behavior.",
+
+  issueUrl: "https://github.com/primer/react/issues/8724",
+
+  highlights: [
+    {
+      label: "Optimization",
+      value: "Removed :has() selectors",
+      icon: FiZap,
+    },
+    {
+      label: "Testing",
+      value: "235 Playwright tests",
+      icon: FiCheckCircle,
+    },
+    {
+      label: "Regression Coverage",
+      value: "New Playwright test",
+      icon: FiCode,
+    },
+  ],
+},
+
+  
   {
     owner: "hasadna",
     repo: "open-bus-map-search",
